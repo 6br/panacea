@@ -5,7 +5,7 @@ ARG project_dir=/app/
 ADD requirements.txt $project_dir
 ADD app.py $project_dir
 ADD algorithm.py $project_dir
-ADD forceatlas2-python $project_dir/forceatlas2-python/
+ADD forceatlas2-py $project_dir/forceatlas2-python/
 
 WORKDIR $project_dir
 
