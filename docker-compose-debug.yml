@@ -1,0 +1,38 @@
+version: '2.2'
+services:
+  neo4j:
+    image: neo4j:3.4.13
+#    image: neo4j:3.1
+    ports:
+     - "7474:7474"
+     - "7687:7687"
+    user: 1000:1000
+    environment:
+     - EXTENSION_SCRIPT=/neo4j/neo4j-init.sh
+     - NEO4J_AUTH=neo4j/neo4jtest
+    volumes:
+     - ./neo4j:/neo4j
+     - ./neo4j/logs:/var/lib/neo4j/logs
+     - ./neo4j/conf:/var/lib/neo4j/conf
+#     - ./neo4j/graph.db:/var/lib/neo4j/data/databases/graph.db
+#    command: neo4j
+  backend:
+    ports: 
+     - "8000:8000"
+    build:
+      context: ./backend
+  frontend:
+    ports: 
+     - "8080:8080"
+    image: python:2.7-slim
+    volumes:
+     - ./frontend:/frontend
+    working_dir: /frontend
+    command: python /frontend/simplehttp.py 8080 user:pass
+    restart: always
+  x2:
+    ports:
+     - "3000:3000"
+    build:
+      context: ./x2
+#      context: http://github.com/g2glab/x2.git
