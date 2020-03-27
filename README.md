@@ -21,3 +21,10 @@ $ ./docker-compose build --no-cache
 ```
 
 Consider to check `~/.docker/config.json` when you struggle with proxies.
+
+# Import Data
+
+1. Modify `scripts/complex_graph_all.sh`
+2. Run `scripts/complex_graph_all.sh <csv_files_of_hr_data>`
+
+
