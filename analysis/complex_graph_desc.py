@@ -3,6 +3,11 @@
 import pandas as pd
 import sys
 import re
+import logging
+
+formatter = '%(levelname)s : %(asctime)s : %(message)s'
+
+logging.basicConfig(level=logging.DEBUG, format=formatter)
 
 company_hash = {}
 company_latest_id = 1000000
@@ -31,6 +36,7 @@ def add_company(name, node_type):
 #e2r = pd.read_csv("~/rcc/e2r_panasonic2019_alldata/2019_01.csv", low_memory=False)
 
 for item in sys.argv[1:]:
+    logging.debug('%s', item)
     e2r = pd.read_csv(item, low_memory=False, encoding="cp932")
 
 #e2r = pd.read_csv("~/rcc/e2r_panasonic2018_alldata/2018.csv", low_memory=False)
