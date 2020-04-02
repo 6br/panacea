@@ -75,7 +75,7 @@ for item in sys.argv[1:]:
         evaluation = row["最終選考_評価_採用センター所長"]
 
         tuples = [(":文理", bunri, ":is_related_to"), (":学部", department, ":is_at"), (":系統", keitou, ":is_majored_in"), (":東西区分", east_west, ":is_categorized_as"), (":学歴区分", degree, ":is_now"), (":希望職種", syokusyu, ":desires"), (":希望職種系統", row["希望職種系統"], ":desires"), (":学校所在地域", province, ":is_located_at"), (":選考会エントリー期", when, ":is_applied_when"), (":性別", gender, ":is"), (":英語のレベル", english, ":speaks_English_as"), (":選考種別フラグ", referral, ":is_a"), ("最終選考_評価_採用センター所長", evaluation, ":is_evaluated_as")]
-        node = [str(i+1), ":person"] if props["category"] != "入社意思確定" else [str(i+1), ":candidate"]
+        node = [str(i+1), ":person"] if (props["category"] != "入社意思確定" and props["category"] != "55f181ee77ee0b3ee77236580fe81e1784248006ab84fe74ba8af2264ee94e01") else [str(i+1), ":candidate"]
         if university == university:
             company_id = add_company(university, ":大学名")
             edge = [str(i+1), "->", str(company_id), ":is_at"]
