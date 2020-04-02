@@ -175,7 +175,7 @@ def star_layout(G):
 def star_prime_layout(G):
     nodes = list(G.nodes)
     if len(nodes) == 0:
-        return []
+        return {}
     close_centers = nx.closeness_centrality(G)
     close_center_nodeid = sorted(close_centers.items(), key=lambda x: x[1], reverse=True)[0][0]
     nodes.remove(close_center_nodeid)
