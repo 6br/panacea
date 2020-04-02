@@ -1,3 +1,3 @@
 FROM g2glab/x2
 
-ADD config/default.yml /home/node/app/config/default.yml 
+ADD config/default.yaml /home/node/app/config/default.yaml 
