@@ -169,7 +169,8 @@ def star_layout(G):
     nodes = list(G.nodes)
     g = G.subgraph(nodes[1:])
     pos = nx.circular_layout(g, center=(1, 1))
-    pos[nodes[0]] = (1, 1)
+    if len(nodes) > 0:
+        pos[nodes[0]] = (1, 1)
     return pos
 
 def star_prime_layout(G):
