@@ -39,12 +39,10 @@ services:
   x2:
     ports:
      - "3000:3000"
-    image: g2glab/x2
-#    build:
-#      context: ./x2
+    build:
+      context: ./x2
     links:
      - neo4j:neo4j
-#      context: http://github.com/g2glab/x2.git
     networks:
      - server
 networks:
