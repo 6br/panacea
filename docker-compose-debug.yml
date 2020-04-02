@@ -1,7 +1,7 @@
-version: '2.2'
+version: '2.1'
 services:
   neo4j:
-    image: neo4j:3.4.13
+    image: neo4j:3.5
 #    image: neo4j:3.1
     ports:
      - "7474:7474"
@@ -15,12 +15,17 @@ services:
      - ./neo4j/logs:/var/lib/neo4j/logs
      - ./neo4j/conf:/var/lib/neo4j/conf
 #     - ./neo4j/graph.db:/var/lib/neo4j/data/databases/graph.db
-#    command: neo4j
+    networks:
+      - server
   backend:
     ports: 
      - "8000:8000"
     build:
       context: ./backend
+    links:
+      - x2:x2
+    networks:
+      - server
   frontend:
     ports: 
      - "8080:8080"
@@ -35,4 +40,9 @@ services:
      - "3000:3000"
     build:
       context: ./x2
-#      context: http://github.com/g2glab/x2.git
+    links:
+     - neo4j:neo4j
+    networks:
+     - server
+     networks:
+      server:
