@@ -44,5 +44,5 @@ services:
      - neo4j:neo4j
     networks:
      - server
-     networks:
-      server:
+networks:
+  server:
