@@ -1,7 +1,7 @@
 #!/bin/bash
 #./complex_graph_all.sh ../rcc/e2*/*.csv
 
-PYTHON3=python3 # ~/anaconda3/bin/python3
+PYTHON3=~/anaconda3/bin/python3 #python3 # ~/anaconda3/bin/python3
 PG2NEO=~/pg/src/pg2neo.js 
 
 $PYTHON3 `dirname $0`/complex_graph_desc_all.py $@ > `pwd`/graph_complex_all2.pg && $PG2NEO `pwd`/graph_complex_all2.pg

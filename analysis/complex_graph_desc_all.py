@@ -10,7 +10,7 @@ formatter = '%(levelname)s : %(asctime)s : %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=formatter)
 
 company_hash = {}
-company_latest_id = 1000000　# We start company id from here.
+company_latest_id = 1000000 # We start company id from here.
 i = 0
 MIN_PROPS_COUNT=3
 
