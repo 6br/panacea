@@ -45,7 +45,6 @@ for item in sys.argv[1:]:
         if row["大学名"] == row["大学名"]:
             props["name"] = "\"" + str(row["大学名"].rstrip()) + "\""
         props["year"] = re.findall("[0-9]{4}", item)[0]
-        #props["category"] = row["【内】ユーザ区分"]
         props["category"] = row["内々定_意思確認フラグ"]
         if "内々定_配属カンパニー" in row:
             belong = row["内々定_配属カンパニー"]
