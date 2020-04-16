@@ -95,7 +95,7 @@ for item in sys.argv[1:]:
 
         for (k, v) in row.items():
             if len(k) <= 12 and not k in already_taken and v and v == v:
-                    company_id = add_company(v, ":" + k)
+                    company_id = add_company(str(v), ":" + str(k))
                     edge = [str(i+1), "->", str(company_id), ":is"]
                     print("\t".join(edge))
 
