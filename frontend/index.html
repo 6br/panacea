@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Bi-attribute graph visualization</title>
+<title>Panacea</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -230,9 +230,9 @@
 
             network = new vis.Network(container, data, options);
             network.setOptions({physics:{timestep:0.9}});
-            
+            document.getElementById('loadingBar').removeAttribute("style");
             network.on("stabilizationProgress", function(params) {
-                document.getElementById('loadingBar').removeAttribute("style");
+                
                 var maxWidth = 496;
                 var minWidth = 20;
                 var widthFactor = params.iterations/params.total;
@@ -321,7 +321,7 @@
     }
     var fizzyText = function() {
         //var self = this;
-        this.year = 2019;
+        this.year = 2018;
         this.first_items = 12;
         this.speed = 10;
         this.first_attr = "学歴区分";
