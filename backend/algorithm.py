@@ -169,11 +169,14 @@ def star_layout(G):
     nodes = list(G.nodes)
     g = G.subgraph(nodes[1:])
     pos = nx.circular_layout(g, center=(1, 1))
-    pos[nodes[0]] = (1, 1)
+    if len(nodes) > 0:
+        pos[nodes[0]] = (1, 1)
     return pos
 
 def star_prime_layout(G):
     nodes = list(G.nodes)
+    if len(nodes) == 0:
+        return {}
     close_centers = nx.closeness_centrality(G)
     close_center_nodeid = sorted(close_centers.items(), key=lambda x: x[1], reverse=True)[0][0]
     nodes.remove(close_center_nodeid)

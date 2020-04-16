@@ -1,4 +1,4 @@
-version: '2.2'
+version: '2.1'
 services:
   neo4j:
     image: neo4j:3.5
@@ -38,12 +38,11 @@ services:
     restart: always
   x2:
     ports:
-     - "3000"
+     - "3000:3000"
     build:
       context: ./x2
     links:
      - neo4j:neo4j
-#      context: http://github.com/g2glab/x2.git
     networks:
      - server
 networks:
