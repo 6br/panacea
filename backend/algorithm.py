@@ -109,7 +109,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["physics"] = False
             v_d["x"] = x * 30 
             v_d["y"] = y * 30
-            v_d["shape"] = "rectangle"
+            v_d["shape"] = "square"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
             #if english:
