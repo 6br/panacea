@@ -8,7 +8,7 @@ from collections import defaultdict
 MEDIA_KEYS = ["candidate", "person"]
 HOST = "http://x2:3000"
 COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
-PRIMARY_COLOR = '#77d9a8'
+NORMAL_COLOR = '#77d9a8'
 
 def query(source, target, year, scale):
     #print(scale)
@@ -91,10 +91,10 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
     for d in result['nodes']:
         v = node_name[d['id']]
         if simple:
-            v_d = {'color': PRIMARY_COLOR, 'size': 100, 'physics': True}   # Large node's size
+            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True}
         else:
             x, y = pos[d['id']]
-            v_d = {'color': PRIMARY_COLOR, 'size': 100, 'physics': True, 'x': x*30, 'y': y*30} # Large node's size
+            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True, 'x': x*30, 'y': y*30}
 
         if "name" in d['properties'] and not english:
             v_d["label"] = d['properties']['name']
@@ -103,11 +103,13 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
         if edge_dict[d['id']]:
             v_d["attr"] = sorted(edge_dict[d['id']])
         if source in d['labels']:
+            # Primary Node
             v_d["color"] = "#00A5FF"
             x, y = pos[d['id']]
             v_d["physics"] = False
-            v_d["x"] = x * 30
+            v_d["x"] = x * 30 
             v_d["y"] = y * 30
+            v_d["shape"] = "rectangle"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
             #if english:
