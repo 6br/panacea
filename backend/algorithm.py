@@ -78,12 +78,14 @@ def to_bipertite_edges(raw):
         ret_list.append({"from": str(item['meta'][0]['id']), "to": str(item['meta'][4]['id'])})
     return ret_list
 
-def create_network(result, pos, edges, source, target, simple=False, auto=False, english=False):
+def create_network(result, pos, edges, source, target, simple=False, auto=False, english=False, dark=False):
     k = {}
     index = 0
     node_name = { d['id']: d['id'] for d in result['nodes'] if 'name'}
-    G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#ffffff", font_color="black")
-    # G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#222222", font_color="white")
+    if not dark:
+        G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#ffffff", font_color="black")
+    else:
+        G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#222222", font_color="white")
     # https://jfly.uni-koeln.de/colorset/CUD_color_set_GuideBook_2018.pdf
     edge_dict = defaultdict(list)
     for d in edges:
@@ -196,7 +198,7 @@ def tree_layout(G):
     return pos
 
 
-def fetch(first, second, year, inherit, auto, layout, scale, english):
+def fetch(first, second, year, inherit, auto, layout, scale, english, dark):
     if auto:
         first, second = count_num_query(first, second, year)
     result, raw = query(first, second, year, scale)
@@ -228,14 +230,14 @@ def fetch(first, second, year, inherit, auto, layout, scale, english):
 
 
     if inherit:
-        G = create_network(result, pos2, result['edges'], first, second, True, auto, english)
+        G = create_network(result, pos2, result['edges'], first, second, True, auto, english, dark)
         nodes, edges, height, width, options = G.get_network_data()
         return result, pos2, nodes, edges, height, width, options
 
     #print(pos2)
     pos = forceatlas(result, pos2, result['edges'], 0);
     #print(pos)
-    G = create_network(result, pos, result['edges'], first, second, False, auto, english)
+    G = create_network(result, pos, result['edges'], first, second, False, auto, english, dark)
     G.force_atlas_2based(-100, 0)
     G.options.physics["stabilization"].iterations = 100
     #G.show_buttons(filter_=['physics'])
