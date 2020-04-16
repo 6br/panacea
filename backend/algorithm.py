@@ -8,6 +8,7 @@ from collections import defaultdict
 MEDIA_KEYS = ["candidate", "person"]
 HOST = "http://x2:3000"
 COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
+PRIMARY_COLOR = '#77d9a8'
 
 def query(source, target, year, scale):
     #print(scale)
@@ -90,10 +91,10 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
     for d in result['nodes']:
         v = node_name[d['id']]
         if simple:
-            v_d = {'color': '#77d9a8', 'size': 100, 'physics': True}
+            v_d = {'color': PRIMARY_COLOR, 'size': 100, 'physics': True}   # Large node's size
         else:
             x, y = pos[d['id']]
-            v_d = {'color': '#77d9a8', 'size': 100, 'physics': True, 'x': x*30, 'y': y*30}
+            v_d = {'color': PRIMARY_COLOR, 'size': 100, 'physics': True, 'x': x*30, 'y': y*30} # Large node's size
 
         if "name" in d['properties'] and not english:
             v_d["label"] = d['properties']['name']
@@ -112,7 +113,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             #if english:
             #    v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
         else:
-            v_d["size"] = 10
+            v_d["size"] = 15 # Small node's size
             v_d["label"] = " "
 
         G.add_node(v, **v_d)
