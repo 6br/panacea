@@ -8,10 +8,10 @@ import json
 api = responder.API(cors=True, cors_params={"allow_origins": ['*']})
 
 class Query(graphene.ObjectType):
-    query = graphene.types.json.JSONString(first=graphene.String(default_value="degree"), second=graphene.String(default_value="domain"), year=graphene.Int(default_value=2019), inherit=graphene.Boolean(default_value=False), auto=graphene.Boolean(default_value=False), layout=graphene.String(default_value="circular"), scale=graphene.Int(default_value=12), english=graphene.Boolean(default_value=False), dark=graphene.Boolean(default_value=False))
+    query = graphene.types.json.JSONString(first=graphene.String(default_value="degree"), second=graphene.String(default_value="domain"), year=graphene.Int(default_value=2019), inherit=graphene.Boolean(default_value=False), auto=graphene.Boolean(default_value=False), layout=graphene.String(default_value="circular"), scale=graphene.Int(default_value=12), english=graphene.Boolean(default_value=False), dark=graphene.Boolean(default_value=False), lower_bound=graphene.Int(default_value=12), upper_bound=graphene.Int(default_value=12))
 
-    def resolve_query(self, info, first, second, year, inherit, auto, layout, scale, english, dark):
-        return algorithm.fetch(first, second, year, inherit, auto, layout, scale, english, dark)
+    def resolve_query(self, info, first, second, year, inherit, auto, layout, scale, english, dark, lower_bound, upper_bound):
+        return algorithm.fetch(first, second, year, inherit, auto, layout, scale, english, dark, lower_bound, upper_bound)
 
     profile = graphene.types.json.JSONString(prof_type=graphene.String(default_value="all"))
     

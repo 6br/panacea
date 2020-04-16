@@ -27,6 +27,22 @@ def query(source, target, year, scale):
     raw = res.json()['raw']
     return result, raw
 
+def bound_query(source, target, year, upper_bound, lower_bound):
+    query = """ \
+    MATCH (n:{source})-[e]-(m)
+    WITH n, count(*) AS cc
+    ORDER BY cc DESC
+    WHERE cc >= {lower} AND cc <= {upper}
+    MATCH (n:{source})<-[e1]-(t:{medium})-[e2]->(k:{target}) 
+    WHERE t.year = {year}
+    RETURN n,e1,t,e2,k LIMIT 3000
+    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], lower = lower_bound, upper = upper_bound)
+
+    res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+    result = res.json()['pg']
+    raw = res.json()['raw']
+    return result, raw
+
 def table_query(source, target, scale):
     query = """
     MATCH (n:{source})-[e]-(m)
@@ -114,8 +130,9 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["shape"] = "square"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
-            #if english:
-            #    v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
+        if english:
+            v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
+            v_d["shape"] = "triangle"
         else:
             v_d["size"] = 15 # Small node's size
             v_d["label"] = " "
@@ -198,10 +215,11 @@ def tree_layout(G):
     return pos
 
 
-def fetch(first, second, year, inherit, auto, layout, scale, english, dark):
+def fetch(first, second, year, inherit, auto, layout, scale, english, dark, lower_bound, upper_bound):
     if auto:
         first, second = count_num_query(first, second, year)
     result, raw = query(first, second, year, scale)
+    #result, raw = limited_query(first, second, year, upper_bound, lower_bound)
     edges = to_bipertite_edges(raw)
     NX = nx.Graph()
     NX.add_nodes_from([ x['from'] for x in edges])
