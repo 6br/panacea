@@ -10,7 +10,7 @@ formatter = '%(levelname)s : %(asctime)s : %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=formatter)
 
 company_hash = {}
-company_latest_id = 1000000
+company_latest_id = 1000000 # We start company id from here.
 i = 0
 MIN_PROPS_COUNT=3
 
@@ -27,10 +27,11 @@ def add_company(name, node_type):
     if name in company_hash:
         return company_hash[name]
     company_latest_id += 1
-    company = [str(company_latest_id), node_type, "name:\"" + name+"\""]
+    company = [str(company_latest_id), node_type, "name:\"" + name.rstrip().strip("\\").replace('\t', ' ') + "\""]
     print("\t".join(company))
     company_hash[name] = company_latest_id
     return company_hash[name]
+
 
 for item in sys.argv[1:]:
     logging.debug('%s', item)
@@ -88,6 +89,16 @@ for item in sys.argv[1:]:
                 company_id = add_company(x[1], x[0])
                 edge = [str(i+1), "->", str(company_id), x[2]]
                 print("\t".join(edge))
+
+
+        already_taken = ["ユーザID", "希望職種系統", "選考種別フラグ", "採用選考区分", "大学名", "文理", "選考種別フラグ", "英語のレベル", "学校所在地域", "プレエントリー／英語のレベル", "性別（自動判定）", "性別", "選考会エントリー期","プレエントリー／希望職種", "学歴区分", "希望職種", "系統", "文理区分", "学校", "学部", "内々定_配属ドメイン", "内々定_配属カンパニー", "内々定_意思確認フラグ", "希望マッチング先第一希望ドメイン", "希望マッチング先第二希望ドメイン", "希望マッチング先第三希望ドメイン", "希望マッチング先第二希望度合", "希望マッチング先第三希望度合", "１次選考_マッチング先会社判断01", "１次選考_マッチング先会社判断02", "１次選考_マッチング先会社判断03", "内々定辞退_辞退先", "内々定辞退_理由", "[CC]志望先1（当社を含む）", "[CC]志望先2（当社を含む）", "[CC]志望先3（当社を含む）", "BOS(CC)志望先1（当社を含む）", "BOS(CC)志望先2（当社を含む）", "BOS(CC)志望先3（当社を含む）"]
+
+        for (k, v) in row.items():
+            if len(k) <= 12 and not k in already_taken and v and v == v:
+                    company_id = add_company(str(v), ":" + str(k))
+                    edge = [str(i+1), "->", str(company_id), ":is"]
+                    print("\t".join(edge))
+
 
        
         actual_belong = belong
