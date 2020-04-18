@@ -9,7 +9,7 @@ if [ ! -f /tmp/neo4j-import-done.flag ]; then
     if [ -e /var/lib/neo4j/data/databases/graph.db ]; then
         rm -r /var/lib/neo4j/data/databases/graph.db
     fi
-    /var/lib/neo4j/bin/neo4j-import --into /var/lib/neo4j/data/databases/graph.db --delimiter '\t' --nodes /neo4j/graph_complex_all2.neo.nodes --relationships /neo4j/graph_complex_all2.neo.edges
+    /var/lib/neo4j/bin/neo4j-import --multiline-fields=true --skip-duplicatate-nodes=true --into /var/lib/neo4j/data/databases/graph.db --delimiter '\t' --nodes /neo4j/graph_complex_all2.neo.nodes --relationships /neo4j/graph_complex_all2.neo.edges
     touch /tmp/neo4j-import-done.flag
 else
     echo "The import has already been made."
