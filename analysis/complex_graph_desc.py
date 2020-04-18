@@ -34,7 +34,7 @@ def add_company(name, node_type):
 
 for item in sys.argv[1:]:
     logging.debug('%s', item)
-    e2r = pd.read_csv(item, low_memory=False, encoding="cp932")
+    e2r = pd.read_csv(item, low_memory=False, encoding="cp932", skipinitialspace=True)
 
     for _, row in e2r.iterrows():
         props = {}

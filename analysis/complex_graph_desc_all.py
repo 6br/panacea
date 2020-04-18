@@ -27,7 +27,7 @@ def add_company(name, node_type):
     if name in company_hash:
         return company_hash[name]
     company_latest_id += 1
-    company = [str(company_latest_id), node_type, "name:\"" + name+"\""]
+    company = [str(company_latest_id), node_type, "name:\"" + name.rstrip() + "\""]
     print("\t".join(company))
     company_hash[name] = company_latest_id
     return company_hash[name]
@@ -35,7 +35,7 @@ def add_company(name, node_type):
 
 for item in sys.argv[1:]:
     logging.debug('%s', item)
-    e2r = pd.read_csv(item, low_memory=False, encoding="cp932")
+    e2r = pd.read_csv(item, low_memory=False, encoding="cp932", skipinitialspace=True)
 
     for _, row in e2r.iterrows():
         props = {}
