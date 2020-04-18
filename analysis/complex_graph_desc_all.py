@@ -139,7 +139,7 @@ for item in sys.argv[1:]:
                 company = company.replace("（株）", "")
                 if company != "" and company != "パナソニック" and company != "Panasonic" and company != "panasonic":
                     company_id = add_company(company, ":競合他社")
-                    edge = [str(i+1), "->", str(company_id), ":is_interested_in", "rank:" + str(rank)]
+                    edge = [str(i+1), "->", str(company_id), ":is_interested_in", "rank:" + "\"" + str(rank).replace('"', '\\"') + "\""]
                     print("\t".join(edge))
     
         escape = row["内々定辞退_辞退先"] 
@@ -151,7 +151,7 @@ for item in sys.argv[1:]:
             escape = escape.replace("（株）", "")
             if escape != "パナソニック" and escape != "Panasonic":
                 company_id = add_company(escape, ":競合他社")
-                edge = [str(i+1), "->", str(company_id), ":fled_to", "reason:" + str(escape_reason)]
+                edge = [str(i+1), "->", str(company_id), ":fled_to", "reason:" + "\"" + str(escape_reason).replace('"', '\\"') + "\""]
                 print("\t".join(edge))
 
         i += 1
