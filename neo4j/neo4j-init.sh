@@ -7,9 +7,9 @@ IFS=$'\n\t'
 if [ ! -f /tmp/neo4j-import-done.flag ]; then
     #/var/lib/neo4j/bin/neo4j-admin neo4j-admin restore --from=<backup-directory mount as a docker volume under /neo4j-data> [--database=<name>] [--force[=<true|false>]]
     if [ -e /var/lib/neo4j/data/databases/graph.db ]; then
-        rm -r /var/lib/neo4j/data/databases/graph.db 
+        rm -r /var/lib/neo4j/data/databases/graph.db
     fi
-    /var/lib/neo4j/bin/neo4j-import --into /var/lib/neo4j/data/databases/graph.db --delimiter '\t' --nodes /neo4j/graph_complex_all.neo.nodes --relationships /neo4j/graph_complex_all.neo.edges 
+    /var/lib/neo4j/bin/neo4j-import --into /var/lib/neo4j/data/databases/graph.db --delimiter '\t' --nodes /neo4j/graph_complex_all.neo2.nodes --relationships /neo4j/graph_complex_all2.neo.edges
     touch /tmp/neo4j-import-done.flag
 else
     echo "The import has already been made."
