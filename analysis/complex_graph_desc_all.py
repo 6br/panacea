@@ -27,7 +27,7 @@ def add_company(name, node_type):
     if name in company_hash:
         return company_hash[name]
     company_latest_id += 1
-    company = [str(company_latest_id), node_type, "name:\"" + name.rstrip().strip("\\").strip("\t") + "\""]
+    company = [str(company_latest_id), node_type, "name:\"" + name.rstrip().strip("\\").replace('\t', '') + "\""]
     print("\t".join(company))
     company_hash[name] = company_latest_id
     return company_hash[name]
