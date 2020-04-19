@@ -14,14 +14,19 @@ class Query(graphene.ObjectType):
         return algorithm.fetch(first, second, year, inherit, auto, layout, scale, english, dark, offset)
 
     profile = graphene.types.json.JSONString(prof_type=graphene.String(default_value="all"))
-    
+
     def resolve_profile(self, info, prof_type):
         return algorithm.profile_query(prof_type)
-    
+
     table = graphene.types.json.JSONString(first=graphene.String(default_value="degree"), second=graphene.String(default_value="domain"), scale=graphene.Int(default_value=12))
-    
+
     def resolve_table(self, info, first, second, scale):
         return algorithm.table_query(first, second, scale)
+
+    info = graphene.types.json.JSONString(id=graphene.String())
+
+    def resolve_info(self, id):
+        return algorithm.media_query(id)
     
 schema = graphene.Schema(query=Query)
 view = responder.ext.GraphQLView(api=api, schema=schema)
