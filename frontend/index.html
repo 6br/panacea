@@ -197,10 +197,10 @@
     }
     
     // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph(year, first, second, auto, layout, scale, english) {
+    function drawGraph(year, first, second, auto, layout, offset, scale, english, dark) {
         var container = document.getElementById('mynetwork');
         
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english})}`)
+        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
             return response.json();
           })
@@ -323,6 +323,7 @@
         //var self = this;
         this.year = 2018;
         this.first_items = 12;
+        this.offset = 0;
         this.speed = 10;
         this.first_attr = "学歴区分";
         this.second_attr = "希望職種";
@@ -355,6 +356,7 @@
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
     var auto_controller = gui.add(text, 'play');
     var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
+    var first_offset_controller = gui.add(text, 'offset', 0, 100).listen();
     var first_controller = gui.add(text, 'first_attr', list).listen();
     var second_controller = gui.add(text, 'second_attr', list).listen(); 
     //var swap_controller = gui.add(text, 'swap');
@@ -370,7 +372,7 @@
         var year = Math.round(value);
         text.year = year;
 //        if (value !== text.year) {
-            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel, text.dark);
+            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
   //      }
     });
         
@@ -380,7 +382,7 @@
             if (text.year > YEARS[YEARS.length - 1]) {
                 text.year = YEARS[0]
             }
-            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel, text.dark);
+            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
         }
         setTimeout(next_year, text.speed * 1000);
     }
@@ -390,14 +392,22 @@
 //        var scale = value * 0.01;
         text.first_items = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel, text.dark)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+    })
+
+    first_offset_controller.onChange(function(value) {
+//        var scale = value * 0.01;
+        text.offset = Math.round(value);
+
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
     })
         
+
     swap_controller.onChange(function(value) {
             const tmp = text.first_attr;
             text.first_attr = text.second_attr;
             text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.nolabel, text.dark);
     })
     
     first_controller.onChange(function(value) {
@@ -408,19 +418,19 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
         
     layout_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
     nolabel_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
     dark_mode_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
     preset_controller.onChange(function(value) {
@@ -445,7 +455,7 @@
             text.first_items = 2;
             text.layout = "spatial";
         }
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
     second_controller.onChange(function(value) {
@@ -456,10 +466,10 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
-    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel, text.dark);
+    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
 })
 
 </script>
