@@ -197,7 +197,7 @@
     }
     
     // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph(year, first, second, auto, layout, offset, scale, english, dark) {
+    function drawGraph(year, first, second, auto, layout, scale, offset, english, dark) {
         var container = document.getElementById('mynetwork');
         
         fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
@@ -407,7 +407,7 @@
             const tmp = text.first_attr;
             text.first_attr = text.second_attr;
             text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.nolabel, text.dark);
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
     first_controller.onChange(function(value) {
