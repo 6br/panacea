@@ -9,6 +9,7 @@ MEDIA_KEYS = ["candidate", "person"]
 HOST = "http://x2:3000"
 COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
 NORMAL_COLOR = '#77d9a8'
+SIZE_SCALING = 25
 
 def query(source, target, year, scale):
     #print(scale)
@@ -112,7 +113,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True}
         else:
             x, y = pos[d['id']]
-            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True, 'x': x*30, 'y': y*30}
+            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True, 'x': x * SIZE_SCALING, 'y': y * SIZE_SCALING}
 
         if "name" in d['properties'] and not english:
             v_d["label"] = d['properties']['name']
@@ -125,8 +126,8 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["color"] = "#00A5FF"
             x, y = pos[d['id']]
             v_d["physics"] = False
-            v_d["x"] = x * 30 
-            v_d["y"] = y * 30
+            v_d["x"] = x * SIZE_SCALING
+            v_d["y"] = y * SIZE_SCALING
             v_d["shape"] = "square"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
@@ -134,7 +135,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             if english:
                 v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
         else:
-            v_d["size"] = 15 # Small node's size
+            v_d["size"] = 15
             v_d["label"] = " "
 
         G.add_node(v, **v_d)
