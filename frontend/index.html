@@ -250,6 +250,13 @@
                 setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
             });
 
+            var element = document.getElementById('panacea');
+            if (dark === true) {
+                element.style.backgroundColor = "#111111";
+            } else {
+                element.style.backgroundColor = "#ffffff";
+            }
+
             return network;
           });
         
@@ -430,12 +437,6 @@
     })
 
     dark_mode_controller.onChange(function(value) {
-        var element = document.getElementById('panacea');
-        if (value === true) {
-            element.style.backgroundColor = "#222222";
-        } else {
-            element.style.backgroundColor = "#ffffff";
-        }
         drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
