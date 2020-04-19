@@ -118,6 +118,8 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["label"] = d['properties']['name']
         elif english:
             v_d["label"] = " "
+            v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
+            v_d["shape"] = "triangle"
         if edge_dict[d['id']]:
             v_d["attr"] = sorted(edge_dict[d['id']])
         if source in d['labels']:
@@ -130,9 +132,6 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["shape"] = "square"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
-        if english:
-            v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
-            v_d["shape"] = "triangle"
         else:
             v_d["size"] = 15 # Small node's size
             v_d["label"] = " "
