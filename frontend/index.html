@@ -11,7 +11,7 @@
 <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
 <style type="text/css">
 
-        #mynetwork {
+        #panacea {
             width: 100%;
             height: 75%; /*700px;*/
             /* background-color: #222222; */
@@ -107,7 +107,7 @@
 
 <body>
 
-<div id = "mynetwork"></div>
+<div id = "panacea"></div>
 
 <div id="loadingBar">
     <div class="outerBorder">
@@ -198,7 +198,7 @@
     
     // This method is responsible for drawing the graph, returns the drawn network
     function drawGraph(year, first, second, auto, layout, scale, offset, english, dark) {
-        var container = document.getElementById('mynetwork');
+        var container = document.getElementById('panacea');
         
         fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
@@ -430,6 +430,12 @@
     })
 
     dark_mode_controller.onChange(function(value) {
+        var element = document.getElementById('panacea');
+        if (value === true) {
+            element.style.backgroundColor = "#222222";
+        } else {
+            element.style.backgroundColor = "#ffffff";
+        }
         drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
