@@ -18,7 +18,7 @@ def query(source, target, year, scale, offset):
     WITH n, count(*) AS cc
     ORDER BY cc DESC
     LIMIT {limit}
-    OFFSET {offset}
+    SKIP {offset}
     MATCH (n:{source})<-[e1]-(t:{medium})-[e2]->(k:{target}) 
     WHERE t.year = {year}
     RETURN n,e1,t,e2,k LIMIT 3000
