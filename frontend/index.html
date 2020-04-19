@@ -138,8 +138,8 @@
     var edges_tmp;
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
-    function updateGraph(year, first, second, auto, scale, english) {
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english})}`)
+    function updateGraph(year, first, second, auto, scale, offset, english, dark) {
+        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
             return response.json();
           })
