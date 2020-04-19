@@ -11,33 +11,18 @@ COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
 NORMAL_COLOR = '#77d9a8'
 SIZE_SCALING = 25
 
-def query(source, target, year, scale):
+def query(source, target, year, scale, offset):
     #print(scale)
     query = """ \
     MATCH (n:{source})-[e]-(m)
     WITH n, count(*) AS cc
     ORDER BY cc DESC
     LIMIT {limit}
+    OFFSET {offset}
     MATCH (n:{source})<-[e1]-(t:{medium})-[e2]->(k:{target}) 
     WHERE t.year = {year}
     RETURN n,e1,t,e2,k LIMIT 3000
-    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], limit = scale)
-
-    res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
-    result = res.json()['pg']
-    raw = res.json()['raw']
-    return result, raw
-
-def bound_query(source, target, year, upper_bound, lower_bound):
-    query = """ \
-    MATCH (n:{source})-[e]-(m)
-    WITH n, count(*) AS cc
-    ORDER BY cc DESC
-    WHERE cc >= {lower} AND cc <= {upper}
-    MATCH (n:{source})<-[e1]-(t:{medium})-[e2]->(k:{target}) 
-    WHERE t.year = {year}
-    RETURN n,e1,t,e2,k LIMIT 3000
-    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], lower = lower_bound, upper = upper_bound)
+    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], limit=scale, offset=offset)
 
     res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
     result = res.json()['pg']
@@ -216,11 +201,10 @@ def tree_layout(G):
     return pos
 
 
-def fetch(first, second, year, inherit, auto, layout, scale, english, dark, lower_bound, upper_bound):
+def fetch(first, second, year, inherit, auto, layout, scale, english, dark, offset):
     if auto:
         first, second = count_num_query(first, second, year)
-    result, raw = query(first, second, year, scale)
-    #result, raw = limited_query(first, second, year, upper_bound, lower_bound)
+    result, raw = query(first, second, year, scale, offset)
     edges = to_bipertite_edges(raw)
     NX = nx.Graph()
     NX.add_nodes_from([ x['from'] for x in edges])
