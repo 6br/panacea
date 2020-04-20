@@ -231,6 +231,11 @@
             network = new vis.Network(container, data, options);
             network.setOptions({physics:{timestep:0.9}});
             document.getElementById('loadingBar').removeAttribute("style");
+            network.on( 'click', function(properties) {
+                var ids = properties.nodes;
+                var clickedNodes = nodes.get(ids);
+                console.log('clicked nodes:', clickedNodes);
+            });
             network.on("stabilizationProgress", function(params) {
                 
                 var maxWidth = 496;
