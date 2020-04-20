@@ -8,6 +8,8 @@
 <script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
 <script type="text/javascript" src="dat.gui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.css" integrity="sha256-2gnCTFNhubDm8AiLEQsyFcFKK8/MmR66o1LrZsgSApE=" crossorigin="anonymous" />
 <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
 <style type="text/css">
 
@@ -138,6 +140,27 @@
     var edges_tmp;
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
+    var modal = new tingle.modal({
+        footer: true,
+        stickyFooter: false,
+        closeMethods: ['overlay', 'button', 'escape'],
+        closeLabel: "Close",
+        cssClass: [],
+        onOpen: function() {
+            // console.log('modal open');
+        },
+        onClose: function() {
+            // console.log('modal closed');
+        },
+        beforeClose: function() {
+            // here's goes some logic
+            // e.g. save content before closing the modal
+            return true; // close the modal
+            return false; // nothing happens
+        }
+    });
+
+
     function updateGraph(year, first, second, auto, scale, offset, english, dark) {
         fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
@@ -234,7 +257,16 @@
             network.on( 'click', function(properties) {
                 var ids = properties.nodes;
                 var clickedNodes = nodes.get(ids);
-                console.log('clicked nodes:', clickedNodes);
+                console.log('clicked nodes:', clickedNodes, ids);
+
+                fetch(`http://${location.hostname}:8000/graph?query={info(id=${ids})}`)
+                .then(function(response) {
+                    return response.json();
+                }).then(function(json) {
+                    const table = JSON.parse(json.data.table);
+                    modal.setContents(table);
+                    modal.open();
+                })
             });
             network.on("stabilizationProgress", function(params) {
                 
