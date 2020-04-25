@@ -160,6 +160,10 @@
         }
     });
 
+    // set content
+    modal.setContent('Welcome to Panacea!');
+    modal.open()
+
 
     function updateGraph(year, first, second, auto, scale, offset, english, dark) {
         fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
@@ -263,7 +267,7 @@
                         return response.json();
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
-                        modal.setContent(table.pg);
+                        modal.setContent(table.pg.toString());
                         modal.open();
                     })
                 }
