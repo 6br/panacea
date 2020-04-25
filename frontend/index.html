@@ -105,20 +105,26 @@
 
         table{
         width: 100%;
-        border-spacing: 0;
+        border-collapse: collapse;
+        }
+
+        table tr{
+        border-bottom: solid 2px white;
+        }
+
+        table tr:last-child{
+        border-bottom: none;
         }
 
         table th{
-        border-bottom: solid 2px #fb5144;
-        padding: 10px 0;
-        }
-
-        table td{
-        border-bottom: solid 2px #ddd;
+        position: relative;
+        text-align: left;
+        width: 30%;
+        background-color: #52c2d0;
+        color: white;
         text-align: center;
         padding: 10px 0;
         }
-    
 </style>
 
 </head>
