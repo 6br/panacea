@@ -257,14 +257,13 @@
             network.on( 'click', function(properties) {
                 var ids = properties.nodes;
                 var clickedNodes = nodes.get(ids);
-                console.log('clicked nodes:', clickedNodes, ids);
                 if (ids.length > 0) {
                     fetch(`http://${location.hostname}:8000/graph?query={info(id:${ids[0]})}`)
                     .then(function(response) {
                         return response.json();
                     }).then(function(json) {
-                        const table = JSON.parse(json.data.table);
-                        modal.setContents(table);
+                        const table = JSON.parse(json.data.info);
+                        modal.setContents(table.pg);
                         modal.open();
                     })
                 }
