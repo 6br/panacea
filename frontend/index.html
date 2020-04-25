@@ -11,7 +11,7 @@
 <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
 <style type="text/css">
 
-        #mynetwork {
+        #panacea {
             width: 100%;
             height: 75%; /*700px;*/
             /* background-color: #222222; */
@@ -107,7 +107,7 @@
 
 <body>
 
-<div id = "mynetwork"></div>
+<div id = "panacea"></div>
 
 <div id="loadingBar">
     <div class="outerBorder">
@@ -138,8 +138,8 @@
     var edges_tmp;
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
-    function updateGraph(year, first, second, auto, scale, english) {
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english})}`)
+    function updateGraph(year, first, second, auto, scale, offset, english, dark) {
+        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
             return response.json();
           })
@@ -197,10 +197,10 @@
     }
     
     // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph(year, first, second, auto, layout, scale, english) {
-        var container = document.getElementById('mynetwork');
+    function drawGraph(year, first, second, auto, layout, scale, offset, english, dark) {
+        var container = document.getElementById('panacea');
         
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english})}`)
+        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
           .then(function(response) {
             return response.json();
           })
@@ -249,6 +249,13 @@
                 // really clean the dom element
                 setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
             });
+
+            var element = document.getElementById('panacea');
+            if (dark === true) {
+                element.style.backgroundColor = "#111111";
+            } else {
+                element.style.backgroundColor = "#ffffff";
+            }
 
             return network;
           });
@@ -323,6 +330,7 @@
         //var self = this;
         this.year = 2018;
         this.first_items = 12;
+        this.offset = 0;
         this.speed = 10;
         this.first_attr = "学歴区分";
         this.second_attr = "希望職種";
@@ -335,6 +343,7 @@
         this.nolabel = false;
         this.play = false;
         this.auto = false;
+        this.dark = false;
         this.layout = "star'";
         this.preset = "default";
     };
@@ -354,6 +363,7 @@
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
     var auto_controller = gui.add(text, 'play');
     var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
+    var first_offset_controller = gui.add(text, 'offset', 0, 100).listen();
     var first_controller = gui.add(text, 'first_attr', list).listen();
     var second_controller = gui.add(text, 'second_attr', list).listen(); 
     //var swap_controller = gui.add(text, 'swap');
@@ -362,13 +372,14 @@
     //var config_controller = gui.add(text, 'auto');
     var layout_controller = gui.add(text, 'layout', ["linear", "circular", "star", "spatial", "star'"]).listen();
     var nolabel_controller = gui.add(text, "nolabel").listen();
+    var dark_mode_controller = gui.add(text, "dark").listen();
     var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig5", "Fig6"]);
         
     year_controller.onChange(function(value) {
         var year = Math.round(value);
         text.year = year;
 //        if (value !== text.year) {
-            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel);
+            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
   //      }
     });
         
@@ -378,7 +389,7 @@
             if (text.year > YEARS[YEARS.length - 1]) {
                 text.year = YEARS[0]
             }
-            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel);
+            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
         }
         setTimeout(next_year, text.speed * 1000);
     }
@@ -388,14 +399,22 @@
 //        var scale = value * 0.01;
         text.first_items = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.nolabel)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+    })
+
+    first_offset_controller.onChange(function(value) {
+//        var scale = value * 0.01;
+        text.offset = Math.round(value);
+
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
     })
         
+
     swap_controller.onChange(function(value) {
             const tmp = text.first_attr;
             text.first_attr = text.second_attr;
             text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel);
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
     first_controller.onChange(function(value) {
@@ -406,15 +425,19 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel);
+        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
         
     layout_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.nolabel);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
     nolabel_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+    })
+
+    dark_mode_controller.onChange(function(value) {
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
     preset_controller.onChange(function(value) {
@@ -439,7 +462,7 @@
             text.first_items = 2;
             text.layout = "spatial";
         }
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
     second_controller.onChange(function(value) {
@@ -450,10 +473,10 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.nolabel);
+        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
 
-    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.nolabel);
+    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
 })
 
 </script>
