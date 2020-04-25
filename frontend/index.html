@@ -255,11 +255,11 @@
             network.setOptions({physics:{timestep:0.9}});
             document.getElementById('loadingBar').removeAttribute("style");
             network.on( 'click', function(properties) {
-                var id = properties.nodes;
-                var clickedNodes = nodes.get(id);
-                console.log('clicked nodes:', clickedNodes, id);
-                if (typeof id === 'number') {
-                    fetch(`http://${location.hostname}:8000/graph?query={info(id:${id})}`)
+                var ids = properties.nodes;
+                var clickedNodes = nodes.get(ids);
+                console.log('clicked nodes:', clickedNodes, ids);
+                if (typeof ids[0] === 'number') {
+                    fetch(`http://${location.hostname}:8000/graph?query={info(id:${ids[0]})}`)
                     .then(function(response) {
                         return response.json();
                     }).then(function(json) {
