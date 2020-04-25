@@ -161,8 +161,8 @@
     });
 
     // set content
-    modal.setContent('Welcome to Panacea!');
-    modal.open()
+    // modal.setContent('<h1>Welcome to Panacea!</h1>');
+    // modal.open()
 
 
     function updateGraph(year, first, second, auto, scale, offset, english, dark) {
@@ -267,6 +267,7 @@
                         return response.json();
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
+                        console.log(table);
                         modal.setContent(table.pg.nodes.map(node => {return node.type + ": " + node.name}).join("\n"));
                         modal.open();
                     })
