@@ -267,7 +267,7 @@
                         return response.json();
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
-                        modal.setContent(table.pg.toString());
+                        modal.setContent(table.pg.nodes.map(node => {return node.type + ": " + node.name}).join("\n"));
                         modal.open();
                     })
                 }
