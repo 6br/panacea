@@ -8,23 +8,39 @@ from collections import defaultdict
 MEDIA_KEYS = ["candidate", "person"]
 HOST = "http://x2:3000"
 COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
+NORMAL_COLOR = '#77d9a8'
+SIZE_SCALING = 25
 
-def query(source, target, year, scale):
+def query(source, target, year, scale, offset):
     #print(scale)
     query = """ \
     MATCH (n:{source})-[e]-(m)
     WITH n, count(*) AS cc
     ORDER BY cc DESC
+    SKIP {offset}
     LIMIT {limit}
     MATCH (n:{source})<-[e1]-(t:{medium})-[e2]->(k:{target}) 
     WHERE t.year = {year}
     RETURN n,e1,t,e2,k LIMIT 3000
-    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], limit = scale)
+    """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], limit=scale, offset=offset)
 
     res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
     result = res.json()['pg']
     raw = res.json()['raw']
     return result, raw
+
+def media_query(media_id):
+    query = """ \
+    MATCH (n)<-[e1]-(t) 
+    WHERE t.id = {medium}
+    RETURN n,e1,t LIMIT 3000
+    """.format(medium=media_id)
+
+    res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+    result = res.json()['pg']
+    raw = res.json()['raw']
+    return result, raw
+    pass
 
 def table_query(source, target, scale):
     query = """
@@ -77,12 +93,14 @@ def to_bipertite_edges(raw):
         ret_list.append({"from": str(item['meta'][0]['id']), "to": str(item['meta'][4]['id'])})
     return ret_list
 
-def create_network(result, pos, edges, source, target, simple=False, auto=False, english=False):
+def create_network(result, pos, edges, source, target, simple=False, auto=False, english=False, dark=False):
     k = {}
     index = 0
     node_name = { d['id']: d['id'] for d in result['nodes'] if 'name'}
-    G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#ffffff", font_color="black")
-    # G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#222222", font_color="white")
+    if not dark:
+        G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#ffffff", font_color="black")
+    else:
+        G = Network(notebook=True, height="700px", width="100%", directed=True, layout=False, bgcolor="#222222", font_color="white")
     # https://jfly.uni-koeln.de/colorset/CUD_color_set_GuideBook_2018.pdf
     edge_dict = defaultdict(list)
     for d in edges:
@@ -90,30 +108,34 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
     for d in result['nodes']:
         v = node_name[d['id']]
         if simple:
-            v_d = {'color': '#77d9a8', 'size': 100, 'physics': True}
+            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True}
         else:
             x, y = pos[d['id']]
-            v_d = {'color': '#77d9a8', 'size': 100, 'physics': True, 'x': x*30, 'y': y*30}
+            v_d = {'color': NORMAL_COLOR, 'size': 100, 'physics': True, 'x': x * SIZE_SCALING, 'y': y * SIZE_SCALING}
 
         if "name" in d['properties'] and not english:
             v_d["label"] = d['properties']['name']
-        elif english:
+        elif english: # no_label
             v_d["label"] = " "
         if edge_dict[d['id']]:
             v_d["attr"] = sorted(edge_dict[d['id']])
         if source in d['labels']:
+            # Primary Node
             v_d["color"] = "#00A5FF"
             x, y = pos[d['id']]
             v_d["physics"] = False
-            v_d["x"] = x * 30
-            v_d["y"] = y * 30
+            v_d["x"] = x * SIZE_SCALING
+            v_d["y"] = y * SIZE_SCALING
+            v_d["shape"] = "square"
         elif target in d['labels']:
             v_d["color"] = '#f7a700'
-            #if english:
-            #    v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
+            v_d["shape"] = "triangle"
+            if english:
+                v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
         else:
-            v_d["size"] = 10
+            v_d["size"] = 30
             v_d["label"] = " "
+            v_d["node_id"] = d['id']
 
         G.add_node(v, **v_d)
     for d in edges:
@@ -193,10 +215,10 @@ def tree_layout(G):
     return pos
 
 
-def fetch(first, second, year, inherit, auto, layout, scale, english):
+def fetch(first, second, year, inherit, auto, layout, scale, english, dark, offset):
     if auto:
         first, second = count_num_query(first, second, year)
-    result, raw = query(first, second, year, scale)
+    result, raw = query(first, second, year, scale, offset)
     edges = to_bipertite_edges(raw)
     NX = nx.Graph()
     NX.add_nodes_from([ x['from'] for x in edges])
@@ -225,14 +247,14 @@ def fetch(first, second, year, inherit, auto, layout, scale, english):
 
 
     if inherit:
-        G = create_network(result, pos2, result['edges'], first, second, True, auto, english)
+        G = create_network(result, pos2, result['edges'], first, second, True, auto, english, dark)
         nodes, edges, height, width, options = G.get_network_data()
         return result, pos2, nodes, edges, height, width, options
 
     #print(pos2)
     pos = forceatlas(result, pos2, result['edges'], 0);
     #print(pos)
-    G = create_network(result, pos, result['edges'], first, second, False, auto, english)
+    G = create_network(result, pos, result['edges'], first, second, False, auto, english, dark)
     G.force_atlas_2based(-100, 0)
     G.options.physics["stabilization"].iterations = 100
     #G.show_buttons(filter_=['physics'])
