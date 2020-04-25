@@ -25,7 +25,7 @@ class Query(graphene.ObjectType):
 
     info = graphene.types.json.JSONString(id=graphene.Int())
 
-    def resolve_info(self, id):
+    def resolve_info(self, info, id):
         return algorithm.media_query(id)
     
 schema = graphene.Schema(query=Query)
