@@ -263,7 +263,7 @@
                         return response.json();
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
-                        modal.setContents(table.pg);
+                        modal.setContent(table.pg);
                         modal.open();
                     })
                 }
