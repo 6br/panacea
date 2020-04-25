@@ -2,6 +2,7 @@
 <head>
 <title>Panacea</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
@@ -268,7 +269,7 @@
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
                         console.log(table.pg);
-                        modal.setContent("<table>" + table.pg.nodes.map(node => {return "<tr><td>" + node.labels[0] + "</td><td>" + node.properties.name + "</td></tr>"}).join() + "</table>");
+                        modal.setContent("<table class=\"table\"><tbody>" + table.pg.nodes.map(node => {return "<tr><td>" + node.labels[0] + "</td><td>" + node.properties.name + "</td></tr>"}).join() + "</tbody></table>");
                         modal.open();
                     })
                 }
