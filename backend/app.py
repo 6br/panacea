@@ -23,7 +23,7 @@ class Query(graphene.ObjectType):
     def resolve_table(self, info, first, second, scale):
         return algorithm.table_query(first, second, scale)
 
-    info = graphene.types.json.JSONString(id=graphene.String())
+    info = graphene.types.json.JSONString(id=graphene.Int())
 
     def resolve_info(self, id):
         return algorithm.media_query(id)
