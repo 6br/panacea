@@ -268,7 +268,7 @@
                     }).then(function(json) {
                         const table = JSON.parse(json.data.info);
                         console.log(table.pg);
-                        modal.setContent(table.pg.nodes.map(node => {return node.labels[0] + ": " + node.properties.name}).join("\n"));
+                        modal.setContent("<table>" + table.pg.nodes.map(node => {return "<tr><td>" + node.labels[0] + "</td><td>" + node.properties.name + "</td></tr>"}).join() + "</table>");
                         modal.open();
                     })
                 }
