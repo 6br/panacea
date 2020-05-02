@@ -2,3 +2,5 @@
 *.edges
 graph.db
 debug.log
+__pycache__
+*.png
