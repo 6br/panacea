@@ -30,17 +30,18 @@ def query(source, target, year, scale, offset):
     return result, raw
 
 def media_query(media_id):
-    query = """ \
-    MATCH (n)<-[e1]-(t) 
-    WHERE t.id = {medium}
-    RETURN n,e1,t LIMIT 3000
-    """.format(medium=media_id)
+    res = requests.get('{host}/traversal/?node_ids={node_id}&iteration=2'.format(host=HOST, node_id=media_id), params={"raw": "true"})
+    return res.json()
+#    query = """ \
+#    MATCH (n)<-[e1]-(t) 
+#    WHERE t.id = {medium}
+#    RETURN n,e1,t LIMIT 3000
+#    """.format(medium=media_id)
 
-    res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
-    result = res.json()['pg']
-    raw = res.json()['raw']
-    return result, raw
-    pass
+#    res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+#    result = res.json()['pg']
+#    raw = res.json()['raw']
+#    return result
 
 def table_query(source, target, scale):
     query = """
