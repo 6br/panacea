@@ -333,6 +333,7 @@
                 document.getElementById('text').innerHTML = '100%';
                 document.getElementById('bar').style.width = '496px';
                 document.getElementById('loadingBar').style.opacity = 0;
+                document.getElementById('loadingBar').className = "contentsLoaded";
                 network.setOptions({physics:{timestep:0.35}});
                 // really clean the dom element
                 setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
