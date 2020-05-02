@@ -336,6 +336,12 @@
                 network.setOptions({physics:{timestep:0.35}});
                 // really clean the dom element
                 setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                var content = document.createElement("div");
+                content.setAttribute("id", "contentsLoaded");
+     
+                var stabilization = document.getElementById("loadingBar");
+
+                stabilization.appendChild(content);
             });
 
             var element = document.getElementById('panacea');
@@ -398,22 +404,7 @@
     }
 
     var gui = new dat.GUI();
-    var urlParam = location.search.substring(1);
-    var paramArray = {};
-    // URLにパラメータが存在する場合
-    if(urlParam) {
-      // 「&」が含まれている場合は「&」で分割
-      var param = urlParam.split('&');
 
-      // パラメータを格納する用の配列を用意
-
-
-      // 用意した配列にパラメータを格納
-      for (i = 0; i < param.length; i++) {
-        var paramItem = param[i].split('=');
-        paramArray[paramItem[0]] = paramItem[1];
-      }
-    }
     var fizzyText = function() {
         //var self = this;
         this.year = 2018;
@@ -461,7 +452,7 @@
     var layout_controller = gui.add(text, 'layout', ["linear", "circular", "star", "spatial", "star'"]).listen();
     var nolabel_controller = gui.add(text, "nolabel").listen();
     var dark_mode_controller = gui.add(text, "dark").listen();
-    var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig5", "Fig6"]);
+    var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig4a", "Fig4b", "Fig4c", "Fig5", "Fig6"]);
         
     year_controller.onChange(function(value) {
         var year = Math.round(value);
@@ -481,6 +472,60 @@
         }
         setTimeout(next_year, text.speed * 1000);
     }
+
+    var preset = function(value) {
+        text.auto = true;
+        if (value === "Fig1") {
+            text.year = 2017;
+            text.first_attr = "学校所在地域";
+            text.second_attr = "英語のレベル";
+            text.first_items = 3;
+            text.layout = "circular";
+            text.nolabel = true;
+            text.speed = 20;
+        } else if (value === "Fig5") {
+            text.nolabel = true;
+            text.first_attr = "学歴区分";
+            text.second_attr = "英語のレベル";
+            text.layout = "circular";
+            text.first_items = 6;
+        } else if (value === "Fig6") {
+            text.nolabel = true;
+            text.first_attr = "文理";
+            text.second_attr = "希望職種";
+            text.first_items = 2;
+            text.layout = "spatial";
+        } else if (value === "Fig4a") {
+            text.nolabel = true;
+            text.layout = "star"
+        } else if (value === "Fig4b") {
+            text.nolabel = true;
+            text.layout = "linear"
+        } else if (value === "Fig4c") {
+            text.nolabel = true;
+            text.layout = "circular"
+        }
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+    }
+
+    var urlParam = location.search.substring(1);
+    var paramArray = {};
+    // URLにパラメータが存在する場合
+    if(urlParam) {
+      // 「&」が含まれている場合は「&」で分割
+      var param = urlParam.split('&');
+
+      // 用意した配列にパラメータを格納
+      for (i = 0; i < param.length; i++) {
+        var paramItem = param[i].split('=');
+        paramArray[paramItem[0]] = paramItem[1];
+      }
+
+      if (paramArray["preset"] !== undefined) {
+          preset(paramArray["preset"])
+      }
+    }
+
     setTimeout(next_year, text.speed * 1000);
         
     first_scale_controller.onChange(function(value) {
@@ -529,28 +574,7 @@
     })
     
     preset_controller.onChange(function(value) {
-        if (value === "Fig1") {
-            text.year = 2017;
-            text.first_attr = "学校所在地域";
-            text.second_attr = "英語のレベル";
-            text.first_items = 3;
-            text.layout = "circular";
-            text.nolabel = true;
-            text.speed = 20;
-        } else if (value === "Fig5") {
-            text.nolabel = true;
-            text.first_attr = "学歴区分";
-            text.second_attr = "英語のレベル";
-            text.layout = "circular";
-            text.first_items = 6;
-        } else {
-            text.nolabel = true;
-            text.first_attr = "文理";
-            text.second_attr = "希望職種";
-            text.first_items = 2;
-            text.layout = "spatial";
-        }
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        preset(value);
     })
 
     second_controller.onChange(function(value) {
