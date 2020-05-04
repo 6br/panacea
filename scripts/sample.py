@@ -20,10 +20,10 @@ timelapse = {
     "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=fig6"
 }
 
-def save(file, url, isMultiple): 
+def save(driver, file, url, isMultiple): 
     # set driver and url
     # https://qiita.com/hujuu/items/ef89c34fca955cc571ec
-    driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
+    
     driver.get(url)
     driver.set_page_load_timeout(10)
     #time.sleep(5)
@@ -56,11 +56,14 @@ def save(file, url, isMultiple):
 
         driver.save_screenshot(FILENAME)
 
-    # Close Web Browser
-    driver.quit()
+
+driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
 
 for (k, v) in condition.items():
-    save(k, v, false)
+    save(driver, k, v, false)
 
 for (k, v) in timelapse.items():
-    save(k, v, false)
+    save(driver, k, v, true)
+
+# Close Web Browser
+driver.quit()
