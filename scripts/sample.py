@@ -43,7 +43,8 @@ def save_png(driver, file, url, isMultiple):
     # Get Screen Shot
     # File Name
     if isMultiple:
-        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), file))
+        if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), file)):
+            os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), file))
         for i in range(0, 20):
             FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), file + str(i) + ".png")
 
