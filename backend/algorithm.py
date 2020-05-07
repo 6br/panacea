@@ -9,7 +9,7 @@ MEDIA_KEYS = ["candidate", "person"]
 HOST = "http://x2:3000"
 COLOR_SET = ["#f7a700", "#fff100", "#804000", "#FF4B00", "#84919e", "#c8c8cb"]
 NORMAL_COLOR = '#77d9a8'
-SIZE_SCALING = 25
+SIZE_SCALING = 20
 
 def query(source, target, year, scale, offset):
     #print(scale)
@@ -134,7 +134,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             if english:
                 v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
         else:
-            v_d["size"] = 30
+            v_d["size"] = 20
             v_d["label"] = " "
             v_d["node_id"] = d['id']
 
