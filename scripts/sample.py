@@ -1,11 +1,13 @@
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 condition = {
     "image/fig3a.png": "http://user:pass@0.0.0.0:8080/?preset=Fig4a",
@@ -56,17 +58,30 @@ def save_png(driver, file, url, isMultiple):
 
         driver.save_screenshot(FILENAME)
 
+def driverfunc(k, v, arg):
+    options = Options()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver' )
+    #driver.maximize_window()
+    driver.set_window_size(1920, 1080) # Full hd
+    driver.set_page_load_timeout(20)
+    save_png(driver, k, v, arg)
+    driver.quit()
 
-driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
-#driver.maximize_window()
-driver.set_window_size(1920, 1080) # Full hd
-driver.set_page_load_timeout(20)
-
+executor = ThreadPoolExecutor(max_workers=2)
 for (k, v) in condition.items():
-    save_png(driver, k, v, False)
+    #save_png(driver, k, v, False)
+    executor.submit(driverfunc, k, v, False)
 
 for (k, v) in timelapse.items():
-    save_png(driver, k, v, True)
+    #save_png(driver, k, v, True)
+    executor.submit(driverfunc, k, v, True)
 
 # Close Web Browser
-driver.quit()
+#driver.quit()
+
+# 並列実行するexecutorを用意する。
+# max_workers が最大の並列実行数
+
+#for t in testcase:
+#    executor.submit(driverfunc,t)
