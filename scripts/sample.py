@@ -60,10 +60,10 @@ def save_png(driver, file, url, isMultiple):
 
 def driverfunc(k, v, arg):
     options = Options()
-    options.add_argument('--headless')
-    driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver' )
+    #options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver')
     #driver.maximize_window()
-    driver.set_window_size(1920, 1080) # Full hd
+    driver.set_window_size(1920, 1280) # Full hd
     driver.set_page_load_timeout(20)
     save_png(driver, k, v, arg)
     driver.quit()
@@ -71,11 +71,13 @@ def driverfunc(k, v, arg):
 executor = ThreadPoolExecutor(max_workers=2)
 for (k, v) in condition.items():
     #save_png(driver, k, v, False)
-    executor.submit(driverfunc, k, v, False)
+    driverfunc(k, v, False)
+    #executor.submit(driverfunc, k, v, False)
 
 for (k, v) in timelapse.items():
     #save_png(driver, k, v, True)
-    executor.submit(driverfunc, k, v, True)
+    driverfunc(k, v, True)
+    #executor.submit(driverfunc, k, v, True)
 
 # Close Web Browser
 #driver.quit()
