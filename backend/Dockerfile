@@ -7,7 +7,7 @@ ADD forceatlas2-py $project_dir/forceatlas2-python/
 
 WORKDIR $project_dir
 
-#RUN pip install responder
+RUN apt-get update && apt-get install -y graphviz
 RUN pip install -r requirements.txt
 #RUN pip install ./forceatlas2-python
 RUN cd forceatlas2-python && python setup.py install
