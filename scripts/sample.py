@@ -20,7 +20,7 @@ timelapse = {
     "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=fig6"
 }
 
-def save(driver, file, url, isMultiple): 
+def save_png(driver, file, url, isMultiple): 
     # set driver and url
     # https://qiita.com/hujuu/items/ef89c34fca955cc571ec
     
@@ -63,10 +63,10 @@ driver.set_window_size(1920, 1080) # Full hd
 
 
 for (k, v) in condition.items():
-    save(driver, k, v, false)
+    save_png(driver, k, v, False)
 
 for (k, v) in timelapse.items():
-    save(driver, k, v, true)
+    save_png(driver, k, v, True)
 
 # Close Web Browser
 driver.quit()
