@@ -45,12 +45,12 @@ def save_png(driver, file, url, isMultiple):
     if isMultiple:
         if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), file)):
             os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), file))
-        for i in range(0, 20):
+        for i in range(0, 40):
             FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), file + str(i) + ".png")
 
             driver.save_screenshot(FILENAME)
 
-            time.sleep(0.5)
+            time.sleep(0.75)
 
     else:
         time.sleep(12)
