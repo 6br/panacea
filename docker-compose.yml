@@ -31,7 +31,7 @@ services:
     ports: 
      - "80:8080"
     build:
-      context: ./fronte
+      context: ./frontend
     restart: always
   x2:
     ports:
