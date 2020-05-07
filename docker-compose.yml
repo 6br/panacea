@@ -29,9 +29,11 @@ services:
      - server
   frontend:
     ports: 
-     - "80:8080"
+     - "8080:80"
     build:
       context: ./frontend
+    volumes:
+      - ./frontend/public:/root/publ
     restart: always
   x2:
     ports:
