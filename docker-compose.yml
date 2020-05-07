@@ -33,7 +33,7 @@ services:
     build:
       context: ./frontend
     volumes:
-      - ./frontend/public:/root/publ
+      - ./frontend/public:/root/public
     restart: always
   x2:
     ports:
