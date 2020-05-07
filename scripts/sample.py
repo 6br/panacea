@@ -8,16 +8,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 condition = {
-    "image/fig3a.png": "http://user:pass@0.0.0.0:8080/?preset=fig4a",
-    "image/fig3b.png": "http://user:pass@0.0.0.0:8080/?preset=fig4b",
-    "image/fig3c.png": "http://user:pass@0.0.0.0:8080/?preset=fig4c",
-    "image/fig2.png": "http://user:pass@0.0.0.0:8080/?preset=default"
+    "image/fig3a.png": "http://user:pass@0.0.0.0:8080/?preset=Fig4a",
+    "image/fig3b.png": "http://user:pass@0.0.0.0:8080/?preset=Fig4b",
+    "image/fig3c.png": "http://user:pass@0.0.0.0:8080/?preset=Fig4c",
+    "image/fig2.png": "http://user:pass@0.0.0.0:8080/?preset=Default"
 }
 
 timelapse = {
-    "image/fig1_4/": "http://user:pass@0.0.0.0:8080/?preset=fig1",
-    "image/fig5/": "http://user:pass@0.0.0.0:8080/?preset=fig5",
-    "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=fig6"
+    "image/fig1_4/": "http://user:pass@0.0.0.0:8080/?preset=Fig1",
+    "image/fig5/": "http://user:pass@0.0.0.0:8080/?preset=Fig5",
+    "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=Fig6"
 }
 
 def save_png(driver, file, url, isMultiple): 
@@ -25,7 +25,6 @@ def save_png(driver, file, url, isMultiple):
     # https://qiita.com/hujuu/items/ef89c34fca955cc571ec
     
     driver.get(url)
-    driver.set_page_load_timeout(10)
     #time.sleep(5)
 
     # get width and height of the page
@@ -39,8 +38,6 @@ def save_png(driver, file, url, isMultiple):
 
     element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'contentsLoaded')))
 
-    time.sleep(2)
-
     # Get Screen Shot
     # File Name
     if isMultiple:
@@ -52,6 +49,8 @@ def save_png(driver, file, url, isMultiple):
             time.sleep(0.5)
 
     else:
+        time.sleep(12)
+
         FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
 
         driver.save_screenshot(FILENAME)
@@ -60,7 +59,7 @@ def save_png(driver, file, url, isMultiple):
 driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
 #driver.maximize_window()
 driver.set_window_size(1920, 1080) # Full hd
-
+driver.set_page_load_timeout(20)
 
 for (k, v) in condition.items():
     save_png(driver, k, v, False)
