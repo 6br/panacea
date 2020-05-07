@@ -515,7 +515,10 @@
             // Default
             text.nolabel = true;
         }
-        gui.hide();
+        if (value !== "default"){
+            gui.hide();
+            document.getElementById('panacea').style.height = '100%';
+        }
 
         drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     }

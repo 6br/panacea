@@ -62,8 +62,8 @@ def driverfunc(k, v, arg):
     options = Options()
     #options.add_argument('--headless')
     driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver')
-    #driver.maximize_window()
-    driver.set_window_size(1920, 1280) # Full hd
+    driver.maximize_window()
+    #driver.set_window_size(1920, 1280) # Full hd
     driver.set_page_load_timeout(20)
     save_png(driver, k, v, arg)
     driver.quit()
