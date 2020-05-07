@@ -29,12 +29,9 @@ services:
      - server
   frontend:
     ports: 
-     - "8080:8080"
-    image: python:2.7-slim
-    volumes:
-     - ./frontend:/frontend
-    working_dir: /frontend
-    command: python /frontend/simplehttp.py 8080 user:pass
+     - "80:8080"
+    build:
+      context: ./fronte
     restart: always
   x2:
     ports:
