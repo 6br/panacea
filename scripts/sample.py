@@ -8,14 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 condition = {
-    "image/fig4a.png": "http://user:pass@0.0.0.0:8080/?preset=fig4a",
-    "image/fig4b.png": "http://user:pass@0.0.0.0:8080/?preset=fig4b",
-    "image/fig4c.png": "http://user:pass@0.0.0.0:8080/?preset=fig4c",
-    "image/fig3.png": "http://user:pass@0.0.0.0:8080/?preset=default"
+    "image/fig3a.png": "http://user:pass@0.0.0.0:8080/?preset=fig4a",
+    "image/fig3b.png": "http://user:pass@0.0.0.0:8080/?preset=fig4b",
+    "image/fig3c.png": "http://user:pass@0.0.0.0:8080/?preset=fig4c",
+    "image/fig2.png": "http://user:pass@0.0.0.0:8080/?preset=default"
 }
 
 timelapse = {
-    "image/fig1/": "http://user:pass@0.0.0.0:8080/?preset=fig1",
+    "image/fig1_4/": "http://user:pass@0.0.0.0:8080/?preset=fig1",
     "image/fig5/": "http://user:pass@0.0.0.0:8080/?preset=fig5",
     "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=fig6"
 }
@@ -58,6 +58,9 @@ def save(driver, file, url, isMultiple):
 
 
 driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
+#driver.maximize_window()
+driver.set_window_size(1920, 1080) # Full hd
+
 
 for (k, v) in condition.items():
     save(driver, k, v, false)
