@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.8-alpine
 
 ARG project_dir=/app/
 
@@ -7,8 +7,7 @@ ADD forceatlas2-py $project_dir/forceatlas2-python/
 
 WORKDIR $project_dir
 
-RUN apt-get update && apt-get install -y graphviz && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apk --update add graphviz && rm -rf /var/cache/apk/*
 RUN pip install -r requirements.txt
 #RUN pip install ./forceatlas2-python
 RUN cd forceatlas2-python && python setup.py install
