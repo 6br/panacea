@@ -23,6 +23,8 @@ $ docker-compose build --no-cache
 
 Consider to check `~/.docker/config.json` when you struggle with proxies.
 
+Access to `http://localhost:8080`
+
 # Import Data
 
 1. Modify the path on `analysis/complex_graph_all.sh`
