@@ -18,7 +18,9 @@ $ docker-compose up
 If you need to rebuild,
 
 ```bash
+$ docker-compose down
 $ docker-compose build --no-cache
+$ docker-compose up --force-recreate
 ```
 
 Consider to check `~/.docker/config.json` when you struggle with proxies.
