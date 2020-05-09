@@ -29,7 +29,7 @@ Access to `http://localhost:8080`
 
 1. Modify the path on `analysis/complex_graph_all.sh`
 2. Run `analysis/complex_graph_all.sh <csv_files_of_hr_data>`
-3. Move the output to neo4j folder `mv analysis/graph_complex_all.neo.* panacea/graph_complex_all.neo.*`
+3. Move the output to neo4j folder `mv analysis/graph_complex_all.neo.* neo4j/graph_complex_all.neo.*`
 4. Run docker-compose `./docker-compose up`
 
 
