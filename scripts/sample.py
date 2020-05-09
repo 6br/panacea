@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import datetime
 from concurrent.futures import ThreadPoolExecutor
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -21,6 +22,13 @@ timelapse = {
     "image/fig5/": "http://user:pass@0.0.0.0:8080/?preset=Fig5",
     "image/fig6/": "http://user:pass@0.0.0.0:8080/?preset=Fig6"
 }
+
+DIR=os.path.join(os.path.dirname(os.path.abspath(__file__)), datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
+
+if not os.path.exists(DIR):
+    os.mkdir(DIR)
+if not os.path.exists(DIR + "/image"):
+    os.mkdir(DIR+"/image")
 
 def save_png(driver, file, url, isMultiple): 
     # set driver and url
@@ -43,10 +51,10 @@ def save_png(driver, file, url, isMultiple):
     # Get Screen Shot
     # File Name
     if isMultiple:
-        if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), file)):
-            os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), file))
+        if not os.path.exists(os.path.join(DIR, file)):
+            os.mkdir(os.path.join(DIR, file))
         for i in range(0, 40):
-            FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), file + str(i) + ".png")
+            FILENAME = os.path.join(DIR, file + str(i) + ".png")
 
             driver.save_screenshot(FILENAME)
 
@@ -55,7 +63,7 @@ def save_png(driver, file, url, isMultiple):
     else:
         time.sleep(12)
 
-        FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        FILENAME = os.path.join(DIR, file)
 
         driver.save_screenshot(FILENAME)
 
