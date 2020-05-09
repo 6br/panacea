@@ -7,7 +7,7 @@ ADD forceatlas2-py $project_dir/forceatlas2-python/
 
 WORKDIR $project_dir
 
-RUN apk --update add gcc libc-dev graphviz && rm -rf /var/cache/apk/*
+RUN apk --update add gcc make libc-dev graphviz && rm -rf /var/cache/apk/*
 RUN pip install -r requirements.txt
 #RUN pip install ./forceatlas2-python
 RUN cd forceatlas2-python && python setup.py install
