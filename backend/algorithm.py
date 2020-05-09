@@ -134,7 +134,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             if english:
                 v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
         else:
-            v_d["size"] = 20
+            v_d["size"] = 25
             v_d["label"] = " "
             v_d["node_id"] = d['id']
 
