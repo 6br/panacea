@@ -298,6 +298,9 @@
             // console.log(json);
             nodes_tmp = json[2]
             edges_tmp = json[3]
+            if(nodes_tmp.length === 0 && edges_tmp.length === 0) {
+                alert("No data. Change the option on configuration view.")
+            }
             nodes = new vis.DataSet(nodes_tmp)
             edges = new vis.DataSet(edges_tmp)
             options = JSON.parse(json[6])
