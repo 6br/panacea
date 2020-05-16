@@ -186,6 +186,22 @@
     var edges_tmp;
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
+    const handleErrors = (res) => {
+        if (res.ok) {
+            return res;
+        }
+
+        switch (res.status) {
+            case 400: throw Error('INVALID_TOKEN');
+            case 401: throw Error('UNAUTHORIZED');
+            case 500: throw Error('INTERNAL_SERVER_ERROR');
+            case 502: throw Error('BAD_GATEWAY');
+            case 404: throw Error('NOT_FOUND');
+            default:  throw Error('UNHANDLED_ERROR');
+        } 
+    };
+
+
     var modal = new tingle.modal({
         footer: true,
         stickyFooter: false,
@@ -358,6 +374,8 @@
             });
         
         fetch(`http://${location.hostname}:8000/graph?query={table(first:"${first}", second: "${second}" scale: ${scale})}`)
+          .catch((e) => { throw Error(e); })
+          .then(handleErrors)
           .then(function(response) {
             return response.json();
           })
@@ -433,6 +451,8 @@
     var text = new fizzyText();
 
     fetch(`http://${location.hostname}:8000/graph?query={profile}`)
+        .catch((e) => { throw Error(e); })
+        .then(handleErrors)
         .then(function(response) {
             return response.json();
         })
