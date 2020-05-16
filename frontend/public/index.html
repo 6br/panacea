@@ -155,7 +155,7 @@
 
 <body>
 
-<div id = "panacea"></div>
+<div id="panacea"></div>
 
 <div id="loadingBar">
     <div class="outerBorder">
@@ -170,11 +170,11 @@
     <canvas id="canvas"></canvas>
 </div>
     
-<div id = "config"></div>
+<div id="config"></div>
 
 <script type="text/javascript">
 
-    const PUBLICATION_MODE=true;
+    const PUBLICATION_MODE = true;
     
     // initialize global variables.
     var edges;
@@ -187,9 +187,6 @@
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
     const handleErrors = (res) => {
-        if (res.errors !== undefined) {
-            throw Error('INTERNAL_SERVER_ERROR');
-        }
         if (res.ok) {
             return res;
         }
@@ -373,7 +370,7 @@
 
             return network;
           }).catch(error => {
-                alert("Backend is not working: " + error)
+                alert("Error: " + error)
             });
         
         fetch(`http://${location.hostname}:8000/graph?query={table(first:"${first}", second: "${second}" scale: ${scale})}`)
@@ -383,6 +380,9 @@
             return response.json();
           })
           .then(function(json) {
+            if (json.errors !== undefined) {
+                throw Error('INTERNAL_SERVER_ERROR');
+            }
             const table = JSON.parse(json.data.table);
             const data = table.results[0].data;
             let datahash = {};
@@ -460,6 +460,9 @@
             return response.json();
         })
         .then(function(json) {
+            if (json.errors !== undefined) {
+                throw Error('INTERNAL_SERVER_ERROR');
+            }
             options = JSON.parse(json.data.profile);
             list = options.raw.results[0].data[0].row[0];
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
@@ -630,7 +633,7 @@
 
     drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
 }).catch(error => {
-    alert("Backend is not working: " + error)
+    alert("Error: " + error)
 })
 
 </script>
