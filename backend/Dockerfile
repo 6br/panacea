@@ -4,7 +4,7 @@ ARG project_dir=/app/
 
 ADD requirements.txt $project_dir
 ADD forceatlas2-py $project_dir/forceatlas2-python/
-
+ENV DEBCONF_NOWARNINGS yes
 WORKDIR $project_dir
 
 RUN apt-get update && apt-get install -y graphviz && apt-get clean \

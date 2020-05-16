@@ -25,12 +25,14 @@ def query(source, target, year, scale, offset):
     """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0], limit=scale, offset=offset)
 
     res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+    res.raise_for_status()
     result = res.json()['pg']
     raw = res.json()['raw']
     return result, raw
 
 def media_query(media_id):
     res = requests.get('{host}/traversal/?node_ids={node_id}&iteration=2'.format(host=HOST, node_id=media_id), params={"raw": "true"})
+    res.raise_for_status()
     return res.json()
 #    query = """ \
 #    MATCH (n)<-[e1]-(t) 
@@ -55,6 +57,7 @@ def table_query(source, target, scale):
     RETURN source, year, cc
     """.format(source=source, target=target, medium=MEDIA_KEYS[0], limit = scale)
     res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+    res.raise_for_status()
     raw = res.json()['raw']
     return raw
 
@@ -70,6 +73,7 @@ def count_num_query(source, target, year):
     RETURN cn, ck
     """.format(year=year, source=source, target=target, medium=MEDIA_KEYS[0])
     res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+    res.raise_for_status()
     raw = res.json()['raw']['results'][0]['data'][0]['row']
     if int(raw[0]) <= int(raw[1]):
         return source, target
@@ -78,6 +82,7 @@ def count_num_query(source, target, year):
 
 def profile_query(prof_type):
     res = requests.get('{host}/profile/'.format(host=HOST), params={"type": prof_type, "raw": "true"})
+    res.raise_for_status()
     return res.json()
     
 def forceatlas(result, pos, edges, niter=100):
