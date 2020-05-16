@@ -353,7 +353,9 @@
             }
 
             return network;
-          });
+          }).catch(error => {
+                alert("Backend is not working: " + error)
+            });
         
         fetch(`http://${location.hostname}:8000/graph?query={table(first:"${first}", second: "${second}" scale: ${scale})}`)
           .then(function(response) {
@@ -604,6 +606,8 @@
     })
 
     drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+}).catch(error => {
+    alert("Backend is not working: " + error)
 })
 
 </script>
