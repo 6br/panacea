@@ -187,6 +187,9 @@
     const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
     const handleErrors = (res) => {
+        if (res.errors !== undefined) {
+            throw Error('INTERNAL_SERVER_ERROR');
+        }
         if (res.ok) {
             return res;
         }
