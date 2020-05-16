@@ -13,9 +13,9 @@ class Query(graphene.ObjectType):
     def resolve_query(self, info, first, second, year, inherit, auto, layout, scale, english, dark, offset):
         return algorithm.fetch(first, second, year, inherit, auto, layout, scale, english, dark, offset)
 
-    profile = graphene.types.json.JSONString(prof_type=graphene.String(default_value="all"))
+    profile = graphene.types.json.JSONString(prof_type=graphene.String(default_value="all"), attribute=graphene.String(default_value="none"))
 
-    def resolve_profile(self, info, prof_type):
+    def resolve_profile(self, info, prof_type, attribute):
         return algorithm.profile_query(prof_type)
 
     table = graphene.types.json.JSONString(first=graphene.String(default_value="degree"), second=graphene.String(default_value="domain"), scale=graphene.Int(default_value=12))
