@@ -2,7 +2,6 @@ version: '2.1'
 services:
   neo4j:
     image: neo4j:3.5
-#    image: neo4j:3.1
     ports:
      - "7474"
      - "7687"
@@ -18,6 +17,7 @@ services:
 #    command: neo4j
     networks:
      - server
+    restart: always
   backend:
     ports: 
      - "8000:8000"
@@ -27,6 +27,7 @@ services:
      - x2:x2
     networks:
      - server
+    restart: always
   frontend:
     ports: 
      - "8080:80"
@@ -44,5 +45,6 @@ services:
      - neo4j:neo4j
     networks:
      - server
+    restart: always
 networks:
   server:
