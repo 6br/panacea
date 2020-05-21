@@ -32,8 +32,14 @@ def add_company(name, node_type):
     company_hash[name] = company_latest_id
     return company_hash[name]
 
+#if sys.argv[1]:
+category = pd.read_csv(sys.argv[1], low_memory=False, encoding="cp932", skipinitialspace=True)
+category_
+for _, row in category.iterrows():
 
-for item in sys.argv[1:]:
+
+
+for item in sys.argv[2:]:
     logging.debug('%s', item)
     e2r = pd.read_csv(item, low_memory=False, encoding="cp932", skipinitialspace=True)
 
