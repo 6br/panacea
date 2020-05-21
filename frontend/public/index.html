@@ -449,7 +449,7 @@
         this.nolabel = false;
         this.play = false;
         this.auto = false;
-        this.dark = false;
+        this.dark_mode = false;
         this.layout = "star'";
         this.preset = "default";
     };
@@ -490,7 +490,7 @@
         var year = Math.round(value);
         text.year = year;
 //        if (value !== text.year) {
-            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
+            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark_mode);
   //      }
     });
         
@@ -500,7 +500,7 @@
             if (text.year > YEARS[YEARS.length - 1]) {
                 text.year = YEARS[0]
             }
-            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
+            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark_mode);
         }
         setTimeout(next_year, text.speed * 1000);
     }
@@ -551,7 +551,7 @@
             document.getElementById('panacea').style.height = '100%';
         }
 
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
     }
 
     var urlParam = location.search.substring(1);
@@ -578,14 +578,14 @@
 //        var scale = value * 0.01;
         text.first_items = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark_mode)
     })
 
     first_offset_controller.onChange(function(value) {
 //        var scale = value * 0.01;
         text.offset = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark_mode)
     })
         
 
@@ -593,7 +593,7 @@
             const tmp = text.first_attr;
             text.first_attr = text.second_attr;
             text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.offset, text.nolabel, text.dark);
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.offset, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
     
     first_controller.onChange(function(value) {
@@ -604,19 +604,19 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
         
     layout_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
 
     nolabel_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
 
     dark_mode_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
     
     preset_controller.onChange(function(value) {
@@ -631,10 +631,10 @@
         document.getElementById('loadingBar').style.display = 'block';
         document.getElementById('loadingBar').style.opacity = 100;
         document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
     })
 
-    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark_mode);
 }).catch(error => {
     alert(error)
 })
