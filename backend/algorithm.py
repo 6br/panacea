@@ -138,6 +138,7 @@ def create_network(result, pos, edges, source, target, simple=False, auto=False,
             v_d["shape"] = "triangle"
             if english:
                 v_d["color"] = COLOR_SET[int(d['id']) % len(COLOR_SET)]
+                v_d["shape"] = "square"
         else:
             v_d["size"] = 25
             v_d["label"] = " "
