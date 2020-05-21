@@ -184,7 +184,7 @@
     var options, data;
     var nodes_tmp;
     var edges_tmp;
-    const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
+    const YEARS = [2014, 2015, 2016, 2017, 2018, 2019];
 
     const handleErrors = (res) => {
         if (res.ok) {
@@ -439,7 +439,7 @@
         this.offset = 0;
         this.speed = 10;
         this.first_attr = "学歴区分";
-        this.second_attr = "希望職種";
+        this.second_attr = "英語のレベル";
 
         this.swap = function() { 
             const tmp = this.first_attr;
@@ -483,7 +483,7 @@
     //var config_controller = gui.add(text, 'auto');
     var layout_controller = gui.add(text, 'layout', ["linear", "circular", "star", "spatial", "star'"]).listen();
     var nolabel_controller = gui.add(text, "nolabel").listen();
-    var dark_mode_controller = gui.add(text, "dark").listen();
+    var dark_mode_controller = gui.add(text, "dark_mode").listen();
     var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig4a", "Fig4b", "Fig4c", "Fig5", "Fig6"]);
         
     year_controller.onChange(function(value) {
