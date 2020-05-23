@@ -30,6 +30,11 @@ def query(source, target, year, scale, offset):
     raw = res.json()['raw']
     return result, raw
 
+def node_query(node_label):
+    res = requests.get('{host}/node_match?node_label={node_id}'.format(host=HOST, node_id=node_label), params={"raw": "true"})
+    res.raise_for_status()
+    return res.json()
+
 def media_query(media_id):
     res = requests.get('{host}/traversal/?node_ids={node_id}&iteration=2'.format(host=HOST, node_id=media_id), params={"raw": "true"})
     res.raise_for_status()
