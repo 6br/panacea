@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import pandas as pd
-import numpy as np
 import sys
 import re
 import logging
@@ -30,7 +29,7 @@ meta_set = set(meta_nodes)
 meta_list = list(meta_set)
 meta_hash = {}
 for meta_name in meta_list:
-    if not np.isnan(meta_name): 
+    if type(meta_name) is str:
         meta = [str(meta_id), ":meta", "name:\"" + meta_name.rstrip().strip("\\").replace('\t', ' ') + "\""]
         print("\t".join(meta))
         meta_hash[meta_name] = meta_id
