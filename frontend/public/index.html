@@ -464,7 +464,7 @@
         })
         .then(function(json) {
             if (json.errors !== undefined) {
-                throw Error('INTERNAL_SERVER_ERROR');
+                throw Error('INTERNAL_SERVER_ERROR'); 
             }
             options = JSON.parse(json.data.profile);
             list = options.raw.results[0].data[0].row[0];
