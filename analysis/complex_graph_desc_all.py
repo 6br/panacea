@@ -55,7 +55,7 @@ def add_company(name, node_type):
 
     # Add category edge:
     if node_type[1:] in meta_hash:
-        edge = [str(company_latest_id), "->", str(meta_hash[name]), ":categorized_as", "label:" + "\"" + str(node_type).replace('"', '\\"') + "\""]
+        edge = [str(company_latest_id), "->", str(meta_hash[node_type[1:]]), ":categorized_as", "label:" + "\"" + str(node_type).replace('"', '\\"') + "\""]
         print("\t".join(edge))
     return company_hash[name]
 
