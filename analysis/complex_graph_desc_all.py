@@ -18,12 +18,12 @@ MIN_PROPS_COUNT=3
 normalize_hash = {"日立": "日立製作所", "hitachi": "日立製作所", "sony": "ソニー", "canon": "キヤノン", "キャノン": "キヤノン", "ntt": "日本電信電話", "トヨタ": "トヨタ自動車", "nttdocomo": "nttドコモ", "エプソン": "セイコーエプソン", "honda": "本田技研工業", "ホンダ": "本田技研工業", "本田技研": "本田技研工業", "日産": "日産自動車"}
 
 #if sys.argv[1]:
-category = pd.read_csv(sys.argv[1], low_memory=False, encoding="cp932", skipinitialspace=True)
+category = pd.read_csv(sys.argv[1], low_memory=False, encoding="utf-8", skipinitialspace=True)
 category_hash = {}
 meta_nodes = []
 for _, row in category.iterrows():
     category_hash["2019"] = row["カテゴリ名"]
-    meta_nodes << row["カテゴリ名"]
+    meta_nodes.push(row["カテゴリ名"])
 
 meta_set = set(meta_nodes)
 meta_list = list(meta_set)
