@@ -17,6 +17,7 @@ MIN_PROPS_COUNT=3
 
 normalize_hash = {"日立": "日立製作所", "hitachi": "日立製作所", "sony": "ソニー", "canon": "キヤノン", "キャノン": "キヤノン", "ntt": "日本電信電話", "トヨタ": "トヨタ自動車", "nttdocomo": "nttドコモ", "エプソン": "セイコーエプソン", "honda": "本田技研工業", "ホンダ": "本田技研工業", "本田技研": "本田技研工業", "日産": "日産自動車"}
 
+
 #if sys.argv[1]:
 category = pd.read_csv(sys.argv[1], low_memory=False, encoding="utf-8", skipinitialspace=True)
 category_hash = {}
@@ -34,6 +35,16 @@ for meta_name in meta_list:
         print("\t".join(meta))
         meta_hash[meta_name] = meta_id
         meta_id += 1
+
+for (key, value) in category_hash.values():
+    # Key is a type of attribute.
+    meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""]
+    print("\t".join(meta))
+    # Add category edge:
+    if value in category_hash:
+        edge = [str(meta_id), "->", str(meta_hash[category_hash[value]]), ":categorized_as", "label:" + "\"" + str(value).replace('"', '\\"') + "\""]
+        print("\t".join(edge))
+    meta_id += 1
 
 
 def add_company(name, node_type):
@@ -53,10 +64,6 @@ def add_company(name, node_type):
     print("\t".join(company))
     company_hash[name] = company_latest_id
 
-    # Add category edge:
-    if node_type[1:] in category_hash:
-        edge = [str(company_latest_id), "->", str(meta_hash[category_hash[node_type[1:]]]), ":categorized_as", "label:" + "\"" + str(node_type[1:]).replace('"', '\\"') + "\""]
-        print("\t".join(edge))
     return company_hash[name]
 
 
