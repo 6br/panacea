@@ -2,7 +2,6 @@ version: '2.1'
 services:
   neo4j:
     image: neo4j:3.5
-#    image: neo4j:3.1
     ports:
      - "7474:7474"
      - "7687:7687"
@@ -15,25 +14,27 @@ services:
      - ./neo4j/logs:/var/lib/neo4j/logs
      - ./neo4j/conf:/var/lib/neo4j/conf
 #     - ./neo4j/graph.db:/var/lib/neo4j/data/databases/graph.db
+#    command: neo4j
     networks:
-      - server
+     - server
+    restart: always
   backend:
     ports: 
      - "8000:8000"
     build:
       context: ./backend
     links:
-      - x2:x2
+     - x2:x2
     networks:
-      - server
+     - server
+    restart: always
   frontend:
     ports: 
-     - "8080:8080"
-    image: python:2.7-slim
+     - "8080:80"
+    build:
+      context: ./frontend
     volumes:
-     - ./frontend:/frontend
-    working_dir: /frontend
-    command: python /frontend/simplehttp.py 8080 user:pass
+      - ./frontend/public:/root/public
     restart: always
   x2:
     ports:
@@ -44,5 +45,6 @@ services:
      - neo4j:neo4j
     networks:
      - server
+    restart: always
 networks:
   server:
