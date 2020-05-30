@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import pandas as pd
+import numpy as np
 import sys
 import re
 import logging
@@ -22,17 +23,18 @@ category = pd.read_csv(sys.argv[1], low_memory=False, encoding="utf-8", skipinit
 category_hash = {}
 meta_nodes = []
 for _, row in category.iterrows():
-    category_hash["2019"] = row["カテゴリ名"]
+    category_hash[row["2019"]] = row["カテゴリ名"]
     meta_nodes.append(row["カテゴリ名"])
 
 meta_set = set(meta_nodes)
 meta_list = list(meta_set)
 meta_hash = {}
 for meta_name in meta_list:
-    meta = [str(meta_id), ":meta", "name:\"" + meta_name.rstrip().strip("\\").replace('\t', ' ') + "\""]
-    print("\t".join(company))
-    meta_hash[meta_name] = meta_id
-    meta_id += 1
+    if not np.isnan(meta_name): 
+        meta = [str(meta_id), ":meta", "name:\"" + meta_name.rstrip().strip("\\").replace('\t', ' ') + "\""]
+        print("\t".join(meta))
+        meta_hash[meta_name] = meta_id
+        meta_id += 1
 
 
 def add_company(name, node_type):
