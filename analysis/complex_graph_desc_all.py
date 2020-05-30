@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG, format=formatter)
 
 company_hash = {}
 company_latest_id = 1000000 # We start company id from here.
-meta_id = 2000000
+meta_id = 10000000
 i = 0
 MIN_PROPS_COUNT=3
 
@@ -54,8 +54,8 @@ def add_company(name, node_type):
     company_hash[name] = company_latest_id
 
     # Add category edge:
-    if node_type[1:] in meta_hash:
-        edge = [str(company_latest_id), "->", str(meta_hash[node_type[1:]]), ":categorized_as", "label:" + "\"" + str(node_type).replace('"', '\\"') + "\""]
+    if node_type[1:] in category_hash:
+        edge = [str(company_latest_id), "->", str(category_hash[node_type[1:]]), ":categorized_as", "label:" + "\"" + str(node_type).replace('"', '\\"') + "\""]
         print("\t".join(edge))
     return company_hash[name]
 
