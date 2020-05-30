@@ -466,8 +466,9 @@
             if (json.errors !== undefined) {
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
-            options = JSON.parse(json.data.profile);
-            list = options.raw.results[0].data[0].row[0];
+            // options = JSON.parse(json.data.profile);
+            console.log(json.raw)
+            list = json.raw.results[0].data[0].map(a => a.row[0]);
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
 
