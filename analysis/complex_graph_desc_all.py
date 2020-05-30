@@ -36,15 +36,16 @@ for meta_name in meta_list:
         meta_hash[meta_name] = meta_id
         meta_id += 1
 
-for (key, value) in category_hash.values():
+for (key, value) in category_hash.items():
     # Key is a type of attribute.
-    meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""]
-    print("\t".join(meta))
-    # Add category edge:
-    if value in category_hash:
-        edge = [str(meta_id), "->", str(meta_hash[category_hash[value]]), ":categorized_as", "label:" + "\"" + str(value).replace('"', '\\"') + "\""]
-        print("\t".join(edge))
-    meta_id += 1
+    if type(key) is str:
+        meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""]
+        print("\t".join(meta))
+        # Add category edge:
+        if value in category_hash:
+            edge = [str(meta_id), "->", str(meta_hash[category_hash[value]]), ":categorized_as", "label:" + "\"" + str(value).replace('"', '\\"') + "\""]
+            print("\t".join(edge))
+        meta_id += 1
 
 
 def add_company(name, node_type):
