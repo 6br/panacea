@@ -23,7 +23,7 @@ category_hash = {}
 meta_nodes = []
 for _, row in category.iterrows():
     category_hash["2019"] = row["カテゴリ名"]
-    meta_nodes.push(row["カテゴリ名"])
+    meta_nodes.append(row["カテゴリ名"])
 
 meta_set = set(meta_nodes)
 meta_list = list(meta_set)
