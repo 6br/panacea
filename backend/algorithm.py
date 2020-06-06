@@ -31,7 +31,7 @@ def query(source, target, year, scale, offset):
     return result, raw
 
 def node_query(node_label):
-    if node_label.len() == 1:
+    if len(node_label.len) == 1:
         query = """
         MATCH (n:{node_label})
         RETURN n
@@ -40,7 +40,7 @@ def node_query(node_label):
         res.raise_for_status()
         raw = res.json()['raw']
         return raw
-    elif node_label.len() == 2:
+    elif len(node_label) == 2:
         res = requests.get('{host}/node_match?node_label[]={node_id1}&node_label[]={node_id2}'.format(host=HOST, node_id1=node_label[0], node_id2=node_label[1]), params={"raw": "true"})
         res.raise_for_status()
         return res.json()
