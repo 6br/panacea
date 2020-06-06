@@ -456,7 +456,7 @@
     
     var text = new fizzyText();
 
-    fetch(`http://${location.hostname}:8000/graph?query={profile(prof_type: "node")}`)
+    fetch(`http://${location.hostname}:8000/graph?query={profile(profType: "node")}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
