@@ -28,7 +28,7 @@ class Query(graphene.ObjectType):
     def resolve_info(self, info, id):
         return algorithm.media_query(id)
 
-    node = graphene.types.json.JSONString(label=graphene.List(graphene.String()))
+    node = graphene.types.json.JSONString(label=graphene.List(graphene.String))
 
     def resolve_node(self, node, label):
         return algorithm.node_query(label)
