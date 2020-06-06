@@ -489,10 +489,9 @@
             console.log(json.data.node);
             if (options.results.length > 0) {
                 YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
-                console.log(YEARS);
             }
             //years = json.raw
-        })
+
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
     var auto_controller = gui.add(text, 'play');
     var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
@@ -657,6 +656,9 @@
     })
 
     drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+}).catch(error => {
+    alert(error)
+})
 }).catch(error => {
     alert(error)
 })
