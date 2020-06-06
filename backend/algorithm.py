@@ -30,20 +30,30 @@ def query(source, target, year, scale, offset):
     raw = res.json()['raw']
     return result, raw
 
-def node_query(node_label):
-    if len(node_label) == 1:
+def node_query(node_labels):
+    if len(node_labels) == 1:
         query = """
         MATCH (n:{node_label})
         RETURN n
-        """.format(node_label=node_label)
+        """.format(node_label=node_labels[0])
         res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
         res.raise_for_status()
         raw = res.json()['raw']
         return raw
-    elif len(node_label) == 2:
-        res = requests.get('{host}/node_match?node_label[]={node_id1}&node_label[]={node_id2}'.format(host=HOST, node_id1=node_label[0], node_id2=node_label[1]), params={"raw": "true"})
+    elif len(node_labels) == 2:
+        res = requests.get('{host}/node_match?node_labels[]={node_id1}&node_labels[]={node_id2}'.format(host=HOST, node_id1=node_labels[0], node_id2=node_labels[1]), params={"raw": "true"})
         res.raise_for_status()
         return res.json()
+
+def edge_query(edge_label):
+        query = """
+        MATCH (n)-[r:{edge_label}]-(m)
+        RETURN *
+        """.format(node_label=node_labels[0])
+        res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+        res.raise_for_status()
+        raw = res.json()['raw']
+        return raw
 
 def media_query(media_id):
     res = requests.get('{host}/traversal/?node_ids={node_id}&iteration=2'.format(host=HOST, node_id=media_id), params={"raw": "true"})

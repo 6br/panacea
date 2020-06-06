@@ -39,7 +39,7 @@ for meta_name in meta_list:
 for (key, value) in category_hash.items():
     # Key is a type of attribute.
     if type(key) is str:
-        meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""]
+        meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""] # "category: str(value).replace('"', '\\"')
         print("\t".join(meta))
         # Add category edge:
         if value in meta_list:
@@ -110,7 +110,7 @@ for item in sys.argv[2:]:
         referral = row["選考種別フラグ"]
         evaluation = row["最終選考_評価_採用センター所長"]
 
-        tuples = [(":文理", bunri, ":is_related_to"), (":学部", department, ":is_at"), (":系統", keitou, ":is_majored_in"), (":東西区分", east_west, ":is_categorized_as"), (":学歴区分", degree, ":is_now"), (":希望職種", syokusyu, ":desires"), (":希望職種系統", row["希望職種系統"], ":desires"), (":学校所在地域", province, ":is_located_at"), (":選考会エントリー期", when, ":is_applied_when"), (":性別", gender, ":is"), (":英語のレベル", english, ":speaks_English_as"), (":選考種別フラグ", referral, ":is_a"), (":最終選考_評価_採用センター所長", evaluation, ":is_evaluated_as"), (":年", year, ":in")]
+        tuples = [(":文理", bunri, ":is_related_to"), (":学部", department, ":is_at"), (":系統", keitou, ":is_majored_in"), (":東西区分", east_west, ":is_categorized_as"), (":学歴区分", degree, ":is_now"), (":希望職種", syokusyu, ":desires"), (":希望職種系統", row["希望職種系統"], ":desires"), (":学校所在地域", province, ":is_located_at"), (":選考会エントリー期", when, ":is_applied_when"), (":性別", gender, ":is"), (":英語のレベル", english, ":speaks_English_as"), (":選考種別フラグ", referral, ":is_a"), (":最終選考_評価_採用センター所長", evaluation, ":is_evaluated_as"), (":time", year, ":in")]
         node = [str(i+1), ":person"] if (props["category"] != "入社意思確定" and props["category"] != "07da9a3b2054dcaf92b695d4ab55bad29bc18c0c7b26de25f9f1bb86cf2513f3" and props["category"] != "dc42f4638f80ae5dc1a5ddaf2e4edfdee6577407b4e0bf6a1a23c8b2b90b6202" and props["category"] != "5cd05332ceec0f70e816e2a698345f7f8f9e4feaf33e6272f1c6236dbcec1af5" and props["category"] != "987e0dab1fe8551842fe8662b87becaee41ef1d2471ef7bc7bba4b2a6e21e8fc") else [str(i+1), ":candidate"]
         if university == university:
             company_id = add_company(university, ":大学名")
