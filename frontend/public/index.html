@@ -470,8 +470,12 @@
             list = options.raw.results[0].data.map(a => a.row[0]);
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
+            list.splice(list.indexOf("年"), 1); // To Remove candidate nodes
+            list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
+            list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: "year")}`)
+
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: "年")}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
