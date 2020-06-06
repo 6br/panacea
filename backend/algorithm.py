@@ -31,7 +31,7 @@ def query(source, target, year, scale, offset):
     return result, raw
 
 def node_query(node_label):
-    if len(node_label.len) == 1:
+    if len(node_label) == 1:
         query = """
         MATCH (n:{node_label})
         RETURN n
