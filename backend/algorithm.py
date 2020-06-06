@@ -49,7 +49,7 @@ def edge_query(edge_label):
         query = """
         MATCH (n)-[r:{edge_label}]-(m)
         RETURN *
-        """.format(node_label=node_labels[0])
+        """.format(node_label=edge_label)
         res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
         res.raise_for_status()
         raw = res.json()['raw']
