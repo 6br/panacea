@@ -468,7 +468,7 @@
             }
             options = JSON.parse(json.data.profile);
             console.log(options)
-            list = options.raw.results[0].data[0].map(a => a.row[0]);
+            list = options.raw.results[0].data.map(a => a.row[0]);
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
 
