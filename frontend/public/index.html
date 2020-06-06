@@ -456,7 +456,7 @@
     
     var text = new fizzyText();
 
-    fetch(`http://${location.hostname}:8000/graph?query={profile(type: "node")}`)
+    fetch(`http://${location.hostname}:8000/graph?query={profile(prof_type: "node")}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
@@ -472,7 +472,7 @@
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
 
-        fetch(`http://${location.hostname}:8000/graph?query={node: "year"}`)
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: "year")}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
