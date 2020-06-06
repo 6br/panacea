@@ -95,7 +95,7 @@ def count_num_query(source, target, year):
         return target, source
 
 def profile_query(prof_type):
-    res = requests.get('{host}/profile/type=node'.format(host=HOST), params={"type": prof_type, "raw": "true"})
+    res = requests.get('{host}/profile'.format(host=HOST), params={"type": prof_type, "raw": "true"})
     res.raise_for_status()
     return res.json()
     
