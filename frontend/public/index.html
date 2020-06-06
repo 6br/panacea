@@ -473,7 +473,7 @@
             list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
             list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: "item")}`)
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
@@ -495,7 +495,7 @@
         console.log(category_hash)
         });
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: "年")}`)
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["年"])}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
