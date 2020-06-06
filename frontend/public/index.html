@@ -473,6 +473,27 @@
             list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
             list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: "item")}`)
+        .catch((e) => { throw Error(e); })
+        .then(handleErrors)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            if (json.errors !== undefined) {
+                throw Error('INTERNAL_SERVER_ERROR'); 
+            }
+            options = JSON.parse(json.data.node);
+            // console.log(json.data.node);
+            if (options.results.length > 0) {
+                category_hash = {}
+                console.log(options.results[0].data)
+                /*options.results[0].data.map(a => { 
+                    if(category_hash[]) = a.row[0].name
+                });*/
+            }
+        console.log(category_hash)
+        });
 
         fetch(`http://${location.hostname}:8000/graph?query={node(label: "年")}`)
         .catch((e) => { throw Error(e); })
