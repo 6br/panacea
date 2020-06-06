@@ -467,7 +467,6 @@
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
             options = JSON.parse(json.data.profile);
-            console.log(options)
             list = options.raw.results[0].data.map(a => a.row[0]);
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
@@ -482,7 +481,8 @@
             if (json.errors !== undefined) {
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
-            console.log(json.raw)
+            options = JSON.parse(json.data.node);
+            console.log(json)
             //years = json.raw
         })
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
