@@ -279,9 +279,8 @@
             nodes.add(nodes_gain)
             // nodes.update(nodes_tmp);
             edges.update(json[3]);
-            console.log(nodes, edges);
+            // console.log(nodes, edges);
             nodes_tmp = next_nodes;
-            
         })
     }
     
@@ -486,7 +485,7 @@
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
             options = JSON.parse(json.data.node);
-            console.log(json.data.node);
+            // console.log(json.data.node);
             if (options.results.length > 0) {
                 YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
             }
