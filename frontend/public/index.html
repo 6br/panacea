@@ -484,7 +484,7 @@
             if (json.errors !== undefined) {
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
-            options = JSON.parse(json.data.node);
+            options = JSON.parse(json.data.edge);
             // console.log(json.data.node);
             if (options.results.length > 0) {
                 category_hash = {}
