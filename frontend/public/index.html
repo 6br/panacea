@@ -184,7 +184,7 @@
     var options, data;
     var nodes_tmp;
     var edges_tmp;
-    const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
+    var YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
     const handleErrors = (res) => {
         if (res.ok) {
@@ -486,7 +486,11 @@
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
             options = JSON.parse(json.data.node);
-            console.log(json)
+            console.log(json.data.node);
+            if (options.raw.results.length > 0) {
+                YEARS = options.raw.results[0].data.map(a => a.row[0].name.parseInt());
+                console.log(YEARS);
+            }
             //years = json.raw
         })
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
