@@ -32,6 +32,11 @@ class Query(graphene.ObjectType):
 
     def resolve_node(self, node, label):
         return algorithm.node_query(label)
+
+    edge = graphene.types.json.JSONString(label=graphene.String())
+
+    def resolve_edge(self, edge, label):
+        return algorithm.edge_query(label)
     
 schema = graphene.Schema(query=Query)
 view = responder.ext.GraphQLView(api=api, schema=schema)
