@@ -488,7 +488,7 @@
             options = JSON.parse(json.data.node);
             console.log(json.data.node);
             if (options.raw.results.length > 0) {
-                YEARS = options.raw.results[0].data.map(a => a.row[0].name.parseInt());
+                YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
                 console.log(YEARS);
             }
             //years = json.raw
