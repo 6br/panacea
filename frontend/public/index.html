@@ -472,6 +472,19 @@
             list.splice(list.indexOf("person"), 1); // To Remove person nodes
             list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
 
+        fetch(`http://${location.hostname}:8000/graph?query={node: "year"}`)
+        .catch((e) => { throw Error(e); })
+        .then(handleErrors)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            if (json.errors !== undefined) {
+                throw Error('INTERNAL_SERVER_ERROR'); 
+            }
+            console.log(json.raw)
+            //years = json.raw
+        })
     var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
     var auto_controller = gui.add(text, 'play');
     var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
