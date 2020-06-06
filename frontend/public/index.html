@@ -473,7 +473,8 @@
             list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
             list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
+        //fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
+        fetch(`http://${location.hostname}:8000/graph?query={edge(label: "categorized_as")}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
