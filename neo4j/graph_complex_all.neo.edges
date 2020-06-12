@@ -1,0 +1,9 @@
+:START_ID	:END_ID	:TYPE
+1	1000001	is_at
+1	1000003	is_at
+1	1000002	is_related_to
+1	1000005	is_categorized_as
+1	1000004	is_majored_in
+1	1000006	is_now
+1	1000008	is_located_at
+1	1000010	speaks_English_as
