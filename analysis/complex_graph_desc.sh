@@ -4,7 +4,9 @@
 PYTHON3=python3 # ~/anaconda3/bin/python3
 PG2NEO="docker run --rm -v $PWD:/work g2glab/pg:0.3.4 pg2neo" #~/pg/src/pg2neo.js 
 
-$PYTHON3 `dirname $0`/complex_graph_desc.py $@ > `pwd`/graph_complex_all.pg && $PG2NEO `pwd`/graph_complex_all.pg
+$PYTHON3 `dirname $0`/complex_graph_desc.py $@ > `pwd`/graph_complex_all.pg
+
+$PG2NEO `pwd`/graph_complex_all.pg
 
 export NEO4J_DIR="/var/lib/neo4j" # On Ubuntu 18.04
 
