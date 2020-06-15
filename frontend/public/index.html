@@ -473,8 +473,7 @@
             list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
             list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
-        //fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
-        fetch(`http://${location.hostname}:8000/graph?query={edge(label: "categorized_as")}`)
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
@@ -484,7 +483,7 @@
             if (json.errors !== undefined) {
                 throw Error('INTERNAL_SERVER_ERROR'); 
             }
-            options = JSON.parse(json.data.edge);
+            options = JSON.parse(json.data.node);
             // console.log(json.data.node);
             if (options.results.length > 0) {
                 category_hash = {}
