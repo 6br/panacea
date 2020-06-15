@@ -41,9 +41,14 @@ def node_query(node_labels):
         raw = res.json()['raw']
         return raw
     elif len(node_labels) == 2:
-        res = requests.get('{host}/node_match?node_labels[]={node_id1}&node_labels[]={node_id2}'.format(host=HOST, node_id1=node_labels[0], node_id2=node_labels[1]), params={"raw": "true"})
+        query = """
+        MATCH (n:{node_label1})-[e]-(m:{node_label2})
+        RETURN n,m
+        """.format(node_label1=node_labels[0], node_label2=node_labels[1])
+        res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
         res.raise_for_status()
-        return res.json()
+        raw = res.json()['raw']
+        return raw
 
 def edge_query(edge_label):
         query = """
