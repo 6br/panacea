@@ -509,7 +509,7 @@
                     return map;
                 }, {});
                 //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
-                modal.setContent("<table class=\"table\"><tbody>" + category_list.map(node => {return `<tr><th>` + node[0] + `</th><td style="background-color: \"#${color_result[node[0]]} !important\";">` + node[1] + "</td></tr>"}).join() + "</tbody></table>");
+                modal.setContent("<table class=\"table\"><tbody>" + category_list.map(node => {return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>"}).join() + "</tbody></table>");
                 modal.open();
             }
         });
