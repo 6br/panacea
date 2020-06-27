@@ -660,14 +660,14 @@
 //        var scale = value * 0.01;
         text.first_items = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
     })
 
     first_offset_controller.onChange(function(value) {
 //        var scale = value * 0.01;
         text.offset = Math.round(value);
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark)
+        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
     })
         
 
@@ -675,7 +675,7 @@
             const tmp = text.first_attr;
             text.first_attr = text.second_attr;
             text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
     })
     
     first_controller.onChange(function(value) {
