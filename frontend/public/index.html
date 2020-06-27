@@ -1,124 +1,136 @@
 <html>
-<head>
-<title>Panacea</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
-<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
-<script type="text/javascript" src="dat.gui.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.css" integrity="sha256-2gnCTFNhubDm8AiLEQsyFcFKK8/MmR66o1LrZsgSApE=" crossorigin="anonymous" />
-<script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
-<style type="text/css">
 
+<head>
+    <title>Panacea</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+    <script type="text/javascript" src="dat.gui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.2/tingle.min.css"
+        integrity="sha256-2gnCTFNhubDm8AiLEQsyFcFKK8/MmR66o1LrZsgSApE=" crossorigin="anonymous" />
+    <script type="text/javascript"
+        src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
+    <style type="text/css">
         #panacea {
             width: 100%;
-            height: 75%; /*700px;*/
+            height: 75%;
+            /*700px;*/
             /* background-color: #222222; */
             border: 1px solid lightgray;
             position: relative;
             float: left;
         }
-    
-    
+
+
         #canvasWrapper {
             height: 25%
         }
 
-        
+
         #loadingBar {
-            position:absolute;
-            top:0px;
-            left:0px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
             width: 100%;
             height: 700px;
-            background-color:rgba(200,200,200,0.8);
+            background-color: rgba(200, 200, 200, 0.8);
             -webkit-transition: all 0.5s ease;
             -moz-transition: all 0.5s ease;
             -ms-transition: all 0.5s ease;
             -o-transition: all 0.5s ease;
             transition: all 0.5s ease;
-            opacity:1;
+            opacity: 1;
         }
 
         #bar {
-            position:absolute;
-            top:0px;
-            left:0px;
-            width:20px;
-            height:20px;
-            margin:auto auto auto auto;
-            border-radius:11px;
-            border:2px solid rgba(30,30,30,0.05);
-            background: rgb(0, 173, 246); /* Old browsers */
-            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 20px;
+            height: 20px;
+            margin: auto auto auto auto;
+            border-radius: 11px;
+            border: 2px solid rgba(30, 30, 30, 0.05);
+            background: rgb(0, 173, 246);
+            /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.4);
         }
 
         #border {
-            position:absolute;
-            top:10px;
-            left:10px;
-            width:500px;
-            height:23px;
-            margin:auto auto auto auto;
-            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
-            border-radius:10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 500px;
+            height: 23px;
+            margin: auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
 
         #text {
-            position:absolute;
-            top:8px;
-            left:530px;
-            width:30px;
-            height:50px;
-            margin:auto auto auto auto;
-            font-size:22px;
+            position: absolute;
+            top: 8px;
+            left: 530px;
+            width: 30px;
+            height: 50px;
+            margin: auto auto auto auto;
+            font-size: 22px;
             color: #000000;
         }
 
         div.outerBorder {
-            position:relative;
-            top:400px;
-            width:600px;
-            height:44px;
-            margin:auto auto auto auto;
-            border:8px solid rgba(0,0,0,0.1);
-            background: rgb(252,252,252); /* Old browsers */
-            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
-            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-            border-radius:72px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            position: relative;
+            top: 400px;
+            width: 600px;
+            height: 44px;
+            margin: auto auto auto auto;
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            background: rgb(252, 252, 252);
+            /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(252, 252, 252, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+            /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* IE10+ */
+            background: linear-gradient(to bottom, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#ededed', GradientType=0);
+            /* IE6-9 */
+            border-radius: 72px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
-        
+
         #config {
             float: left;
             width: 400px;
-        /*    height: 600px; */
+            /*    height: 600px; */
         }
 
         /* Copied from https://webliker.info/75964/*/
 
-        table{
+        table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        table tr{
+        table tr {
             border-bottom: solid 2px white;
         }
 
-        table tr:last-child{
+        table tr:last-child {
             border-bottom: none;
         }
 
-        table th{
+        table th {
             position: relative;
             text-align: left;
             width: 30%;
@@ -129,299 +141,299 @@
         }
 
 
-        table th:after{
+        table th:after {
             display: block;
             content: "";
             width: 0px;
             height: 0px;
             position: absolute;
-            top:calc(50% - 10px);
-            right:-10px;
+            top: calc(50% - 10px);
+            right: -10px;
             border-left: 10px solid #52c2d0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
         }
 
-        table td{
+        table td {
             text-align: left;
             width: 70%;
             text-align: center;
             background-color: #eee;
             padding: 1px 0;
         }
-</style>
+    </style>
 
 </head>
 
 <body>
 
-<div id="panacea"></div>
+    <div id="panacea"></div>
 
-<div id="loadingBar">
-    <div class="outerBorder">
-        <div id="text">0%</div>
-        <div id="border">
-            <div id="bar"></div>
+    <div id="loadingBar">
+        <div class="outerBorder">
+            <div id="text">0%</div>
+            <div id="border">
+                <div id="bar"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="canvasWrapper">
-    <canvas id="canvas"></canvas>
-</div>
-    
-<div id="config"></div>
+    <div id="canvasWrapper">
+        <canvas id="canvas"></canvas>
+    </div>
 
-<script type="text/javascript">
+    <div id="config"></div>
 
-    const PUBLICATION_MODE = true;
-    
-    // initialize global variables.
-    var edges;
-    var nodes;
-    var network; 
-    var container;
-    var options, data;
-    var nodes_tmp;
-    var edges_tmp;
-    var YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; // Default value; overwritten by data.
+    <script type="text/javascript">
 
-    const handleErrors = (res) => {
-        if (res.ok) {
-            return res;
-        }
+        const PUBLICATION_MODE = true;
 
-        switch (res.status) {
-            case 400: throw Error('INVALID_TOKEN');
-            case 401: throw Error('UNAUTHORIZED');
-            case 500: throw Error('INTERNAL_SERVER_ERROR');
-            case 502: throw Error('BAD_GATEWAY');
-            case 404: throw Error('NOT_FOUND');
-            default:  throw Error('UNHANDLED_ERROR');
-        } 
-    };
+        // initialize global variables.
+        var edges;
+        var nodes;
+        var network;
+        var container;
+        var options, data;
+        var nodes_tmp;
+        var edges_tmp;
+        var YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; // Default value; overwritten by data.
 
-
-    var modal = new tingle.modal({
-        footer: true,
-        stickyFooter: false,
-        closeMethods: ['overlay', 'button', 'escape'],
-        closeLabel: "Close",
-        cssClass: [],
-        onOpen: function() {
-            // console.log('modal open');
-        },
-        onClose: function() {
-            // console.log('modal closed');
-        },
-        beforeClose: function() {
-            // here's goes some logic
-            // e.g. save content before closing the modal
-            return true; // close the modal
-            return false; // nothing happens
-        }
-    });
-
-    var modal2 = new tingle.modal({
-        footer: true,
-        stickyFooter: false,
-        closeMethods: ['overlay', 'button', 'escape'],
-        closeLabel: "Close",
-        cssClass: [],
-        onOpen: function() {
-            // console.log('modal open');
-        },
-        onClose: function() {
-            // console.log('modal closed');
-        },
-        beforeClose: function() {
-            // here's goes some logic
-            // e.g. save content before closing the modal
-            return true; // close the modal
-            return false; // nothing happens
-        }
-    });
-
-    // set content
-    // modal.setContent('<h1>Welcome to Panacea!</h1>');
-    // modal.open()
-
-
-    function updateGraph(year, first, second, auto, scale, offset, english, dark) {
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(json) {
-            json = JSON.parse(json.data.query);
-            const cur_node_ids = nodes_tmp.map(a => a.id);
-            const nxt_node_ids = json[2].map(a => a.id);
-            
-            let nodes_loss = nodes_tmp.filter(e => (nxt_node_ids.indexOf(e.id) === -1));
-            let nodes_gain = json[2].filter(e => (cur_node_ids.indexOf(e.id) === -1));
-            const nodes_intersect =  cur_node_ids.filter(e => (nxt_node_ids.indexOf(e) !== -1));
-            // console.log(nodes_loss, nodes_gain);
-
-            if (nodes_loss.length === 0 && nodes_gain.length === 0) {
-                return
-            }
-            let next_nodes = json[2];
-
-            nodes_gain.forEach((a, i) => {
-                candidate = nodes_loss.findIndex(b => a.id === b.id || ( b.attr && a.attr && b.attr.toString() === a.attr.toString())); //TODO(FIXME)
-                if (candidate !== -1) {
-                    // console.log(cur_node_ids.indexOf(nodes_loss[candidate].id), nxt_node_ids.indexOf(a.id))
-                    next_nodes[nxt_node_ids.indexOf(a.id)].id = nodes_loss[candidate].id
-                    nodes_loss.splice(candidate, 1);
-                    nodes_gain.splice(i, 1)
-                } else {
-//                    nodes_gain.push(a);
-                }
-            })
-
-            network.storePositions();
-            const positions = network.getPositions(nodes_intersect);
-            nodes_gain.forEach(a => {
-                if (a.attr && a["attr"].length === 2) {
-                    //const car = nodes_tmp.find(b => b.id === a["attr"][0]);
-                    //const cdr = nodes_tmp.find(b => b.id === a["attr"][1]);
-                    const car = positions[a["attr"][0]];
-                    const cdr = positions[a["attr"][1]];
-                    if (car && cdr) {
-                        a.x = (car.x + cdr.x) / 2.0;
-                        a.y = (car.y + cdr.y) / 2.0;
-                    }
-                }
-            })
-
-            // console.log(nodes_gain, nodes_loss, nodes_tmp, )
-            nodes.remove(nodes_loss)
-            nodes.add(nodes_gain)
-            // nodes.update(nodes_tmp);
-            edges.update(json[3]);
-            // console.log(nodes, edges);
-            nodes_tmp = next_nodes;
-        })
-    }
-    
-    // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph(year, first, second, auto, layout, scale, offset, english, dark) {
-        var container = document.getElementById('panacea');
-        
-        fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(json) {
-            json = JSON.parse(json.data.query)
-            // console.log(json);
-            nodes_tmp = json[2]
-            edges_tmp = json[3]
-            if(nodes_tmp.length === 0 && edges_tmp.length === 0) {
-                alert("No data. Change the option on configuration view.")
-            }
-            nodes = new vis.DataSet(nodes_tmp)
-            edges = new vis.DataSet(edges_tmp)
-            options = JSON.parse(json[6])
-            data = {nodes: nodes, edges: edges};
-            options.configure["container"] = document.getElementById("config");
-            // console.log(options, nodes);
-            options["nodes"] = {};
-            options.nodes["font"] = {};
-            options.nodes.font.size = 150;
-            options.nodes.borderWidthSelected = 10;
-            options.nodes.scaling = {"label": {"min":8, "max": 40 }};
-
-            container.innerHTML = "";
-            //options.physics["timestep"] = 0.1
-            
-            var config_container = document.getElementById('config');
-            config_container.innerHTML = "";
-
-
-            network = new vis.Network(container, data, options);
-            network.setOptions({physics:{timestep:0.9}});
-            document.getElementById('loadingBar').removeAttribute("style");
-            network.on( 'click', function(properties) {
-                var ids = properties.nodes;
-                var clickedNodes = nodes.get(ids);
-                if (ids.length > 0) {
-                    fetch(`http://${location.hostname}:8000/graph?query={info(id:${ids[0]})}`)
-                    .then(function(response) {
-                        return response.json();
-                    }).then(function(json) {
-                        const table = JSON.parse(json.data.info);
-                        console.log(table.pg);
-                        modal.setContent("<table class=\"table\"><tbody>" + table.pg.nodes.map(node => {return "<tr><th>" + node.labels[0] + "</th><td>" + node.properties.name + "</td></tr>"}).join() + "</tbody></table>");
-                        modal.open();
-                    })
-                }
-            });
-            network.on("stabilizationProgress", function(params) {
-                
-                var maxWidth = 496;
-                var minWidth = 20;
-                var widthFactor = params.iterations/params.total;
-                var width = Math.max(minWidth,maxWidth * widthFactor);
-
-                document.getElementById('bar').style.width = width + 'px';
-                document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
-            });
-            network.once("stabilizationIterationsDone", function() {
-                document.getElementById('text').innerHTML = '100%';
-                document.getElementById('bar').style.width = '496px';
-                document.getElementById('loadingBar').style.opacity = 0;
-                document.getElementById('loadingBar').className = "contentsLoaded";
-                network.setOptions({physics:{timestep:0.35}});
-                // really clean the dom element
-                setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
-                var content = document.createElement("div");
-                content.setAttribute("id", "contentsLoaded");
-     
-                var stabilization = document.getElementById("loadingBar");
-
-                stabilization.appendChild(content);
-            });
-
-            var element = document.getElementById('panacea');
-            if (dark === true) {
-                element.style.backgroundColor = "#111111";
-            } else {
-                element.style.backgroundColor = "#ffffff";
+        const handleErrors = (res) => {
+            if (res.ok) {
+                return res;
             }
 
-            return network;
-        }).catch(error => {
-            alert(error)
+            switch (res.status) {
+                case 400: throw Error('INVALID_TOKEN');
+                case 401: throw Error('UNAUTHORIZED');
+                case 500: throw Error('INTERNAL_SERVER_ERROR');
+                case 502: throw Error('BAD_GATEWAY');
+                case 404: throw Error('NOT_FOUND');
+                default: throw Error('UNHANDLED_ERROR');
+            }
+        };
+
+
+        var modal = new tingle.modal({
+            footer: true,
+            stickyFooter: false,
+            closeMethods: ['overlay', 'button', 'escape'],
+            closeLabel: "Close",
+            cssClass: [],
+            onOpen: function () {
+                // console.log('modal open');
+            },
+            onClose: function () {
+                // console.log('modal closed');
+            },
+            beforeClose: function () {
+                // here's goes some logic
+                // e.g. save content before closing the modal
+                return true; // close the modal
+                return false; // nothing happens
+            }
         });
-        
-        fetch(`http://${location.hostname}:8000/graph?query={table(first:"${first}", second: "${second}" scale: ${scale})}`)
-          .catch((e) => { throw Error(e); })
-          .then(handleErrors)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(json) {
-            if (json.errors !== undefined) {
-                throw Error('INTERNAL_SERVER_ERROR');
+
+        var modal2 = new tingle.modal({
+            footer: true,
+            stickyFooter: false,
+            closeMethods: ['overlay', 'button', 'escape'],
+            closeLabel: "Close",
+            cssClass: [],
+            onOpen: function () {
+                // console.log('modal open');
+            },
+            onClose: function () {
+                // console.log('modal closed');
+            },
+            beforeClose: function () {
+                // here's goes some logic
+                // e.g. save content before closing the modal
+                return true; // close the modal
+                return false; // nothing happens
             }
-            const table = JSON.parse(json.data.table);
-            const data = table.results[0].data;
-            let datahash = {};
-            data.forEach(item => {
-                if (datahash[item.row[0]]) {
-                    
-                } else {
-                    datahash[item.row[0]] = {label: item.row[0], data: YEARS.map(_ => {return 0}) }
-                }
-                 datahash[item.row[0]].data[item.row[1]-YEARS[0]] = item.row[2]
-            })
-            let datasets = []
-            Object.keys(datahash).forEach(key => {
-                datasets.push(datahash[key])
-            })
-            
-            var ctx = document.getElementById('canvas').getContext('2d');
+        });
+
+        // set content
+        // modal.setContent('<h1>Welcome to Panacea!</h1>');
+        // modal.open()
+
+
+        function updateGraph(year, first, second, auto, scale, offset, english, dark) {
+            fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", inherit: true, auto: ${auto}, scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    json = JSON.parse(json.data.query);
+                    const cur_node_ids = nodes_tmp.map(a => a.id);
+                    const nxt_node_ids = json[2].map(a => a.id);
+
+                    let nodes_loss = nodes_tmp.filter(e => (nxt_node_ids.indexOf(e.id) === -1));
+                    let nodes_gain = json[2].filter(e => (cur_node_ids.indexOf(e.id) === -1));
+                    const nodes_intersect = cur_node_ids.filter(e => (nxt_node_ids.indexOf(e) !== -1));
+                    // console.log(nodes_loss, nodes_gain);
+
+                    if (nodes_loss.length === 0 && nodes_gain.length === 0) {
+                        return
+                    }
+                    let next_nodes = json[2];
+
+                    nodes_gain.forEach((a, i) => {
+                        candidate = nodes_loss.findIndex(b => a.id === b.id || (b.attr && a.attr && b.attr.toString() === a.attr.toString())); //TODO(FIXME)
+                        if (candidate !== -1) {
+                            // console.log(cur_node_ids.indexOf(nodes_loss[candidate].id), nxt_node_ids.indexOf(a.id))
+                            next_nodes[nxt_node_ids.indexOf(a.id)].id = nodes_loss[candidate].id
+                            nodes_loss.splice(candidate, 1);
+                            nodes_gain.splice(i, 1)
+                        } else {
+                            //                    nodes_gain.push(a);
+                        }
+                    })
+
+                    network.storePositions();
+                    const positions = network.getPositions(nodes_intersect);
+                    nodes_gain.forEach(a => {
+                        if (a.attr && a["attr"].length === 2) {
+                            //const car = nodes_tmp.find(b => b.id === a["attr"][0]);
+                            //const cdr = nodes_tmp.find(b => b.id === a["attr"][1]);
+                            const car = positions[a["attr"][0]];
+                            const cdr = positions[a["attr"][1]];
+                            if (car && cdr) {
+                                a.x = (car.x + cdr.x) / 2.0;
+                                a.y = (car.y + cdr.y) / 2.0;
+                            }
+                        }
+                    })
+
+                    // console.log(nodes_gain, nodes_loss, nodes_tmp, )
+                    nodes.remove(nodes_loss)
+                    nodes.add(nodes_gain)
+                    // nodes.update(nodes_tmp);
+                    edges.update(json[3]);
+                    // console.log(nodes, edges);
+                    nodes_tmp = next_nodes;
+                })
+        }
+
+        // This method is responsible for drawing the graph, returns the drawn network
+        function drawGraph(year, first, second, auto, layout, scale, offset, english, dark) {
+            var container = document.getElementById('panacea');
+
+            fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    json = JSON.parse(json.data.query)
+                    // console.log(json);
+                    nodes_tmp = json[2]
+                    edges_tmp = json[3]
+                    if (nodes_tmp.length === 0 && edges_tmp.length === 0) {
+                        alert("No data. Change the option on configuration view.")
+                    }
+                    nodes = new vis.DataSet(nodes_tmp)
+                    edges = new vis.DataSet(edges_tmp)
+                    options = JSON.parse(json[6])
+                    data = { nodes: nodes, edges: edges };
+                    options.configure["container"] = document.getElementById("config");
+                    // console.log(options, nodes);
+                    options["nodes"] = {};
+                    options.nodes["font"] = {};
+                    options.nodes.font.size = 150;
+                    options.nodes.borderWidthSelected = 10;
+                    options.nodes.scaling = { "label": { "min": 8, "max": 40 } };
+
+                    container.innerHTML = "";
+                    //options.physics["timestep"] = 0.1
+
+                    var config_container = document.getElementById('config');
+                    config_container.innerHTML = "";
+
+
+                    network = new vis.Network(container, data, options);
+                    network.setOptions({ physics: { timestep: 0.9 } });
+                    document.getElementById('loadingBar').removeAttribute("style");
+                    network.on('click', function (properties) {
+                        var ids = properties.nodes;
+                        var clickedNodes = nodes.get(ids);
+                        if (ids.length > 0) {
+                            fetch(`http://${location.hostname}:8000/graph?query={info(id:${ids[0]})}`)
+                                .then(function (response) {
+                                    return response.json();
+                                }).then(function (json) {
+                                    const table = JSON.parse(json.data.info);
+                                    console.log(table.pg);
+                                    modal.setContent("<table class=\"table\"><tbody>" + table.pg.nodes.map(node => { return "<tr><th>" + node.labels[0] + "</th><td>" + node.properties.name + "</td></tr>" }).join() + "</tbody></table>");
+                                    modal.open();
+                                })
+                        }
+                    });
+                    network.on("stabilizationProgress", function (params) {
+
+                        var maxWidth = 496;
+                        var minWidth = 20;
+                        var widthFactor = params.iterations / params.total;
+                        var width = Math.max(minWidth, maxWidth * widthFactor);
+
+                        document.getElementById('bar').style.width = width + 'px';
+                        document.getElementById('text').innerHTML = Math.round(widthFactor * 100) + '%';
+                    });
+                    network.once("stabilizationIterationsDone", function () {
+                        document.getElementById('text').innerHTML = '100%';
+                        document.getElementById('bar').style.width = '496px';
+                        document.getElementById('loadingBar').style.opacity = 0;
+                        document.getElementById('loadingBar').className = "contentsLoaded";
+                        network.setOptions({ physics: { timestep: 0.35 } });
+                        // really clean the dom element
+                        setTimeout(function () { document.getElementById('loadingBar').style.display = 'none'; }, 500);
+                        var content = document.createElement("div");
+                        content.setAttribute("id", "contentsLoaded");
+
+                        var stabilization = document.getElementById("loadingBar");
+
+                        stabilization.appendChild(content);
+                    });
+
+                    var element = document.getElementById('panacea');
+                    if (dark === true) {
+                        element.style.backgroundColor = "#111111";
+                    } else {
+                        element.style.backgroundColor = "#ffffff";
+                    }
+
+                    return network;
+                }).catch(error => {
+                    alert(error)
+                });
+
+            fetch(`http://${location.hostname}:8000/graph?query={table(first:"${first}", second: "${second}" scale: ${scale})}`)
+                .catch((e) => { throw Error(e); })
+                .then(handleErrors)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    if (json.errors !== undefined) {
+                        throw Error('INTERNAL_SERVER_ERROR');
+                    }
+                    const table = JSON.parse(json.data.table);
+                    const data = table.results[0].data;
+                    let datahash = {};
+                    data.forEach(item => {
+                        if (datahash[item.row[0]]) {
+
+                        } else {
+                            datahash[item.row[0]] = { label: item.row[0], data: YEARS.map(_ => { return 0 }) }
+                        }
+                        datahash[item.row[0]].data[item.row[1] - YEARS[0]] = item.row[2]
+                    })
+                    let datasets = []
+                    Object.keys(datahash).forEach(key => {
+                        datasets.push(datahash[key])
+                    })
+
+                    var ctx = document.getElementById('canvas').getContext('2d');
                     ctx.canvas.height = 200;
                     var chart = new Chart(ctx, {
                         // The type of chart we want to create
@@ -438,292 +450,293 @@
                             responsive: true,
                             maintainAspectRatio: false,
                             plugins: {
-                              colorschemes: {
-                                scheme: 'tableau.Gray20'
-                              }
+                                colorschemes: {
+                                    scheme: 'tableau.Gray20'
+                                }
                             }
                         }
                     });
 
                 })
-        
-    }
 
-    var gui = new dat.GUI();
+        }
 
-    var fizzyText = function() {
-        //var self = this;
-        this.year = 2018;
-        this.first_items = 12;
-        this.offset = 0;
-        this.speed = 10;
-        this.first_attr = "学歴区分";
-        this.second_attr = "希望職種";
+        var gui = new dat.GUI();
 
-        this.swap = function() { 
-            const tmp = this.first_attr;
-            this.first_attr = this.second_attr;
-            this.second_attr = tmp;
+        var fizzyText = function () {
+            //var self = this;
+            this.year = 2018;
+            this.first_items = 12;
+            this.offset = 0;
+            this.speed = 10;
+            this.first_attr = "学歴区分";
+            this.second_attr = "希望職種";
+
+            this.swap = function () {
+                const tmp = this.first_attr;
+                this.first_attr = this.second_attr;
+                this.second_attr = tmp;
+            };
+            this.nolabel = false;
+            this.play = false;
+            this.auto = false;
+            this.dark = false;
+            this.layout = "star'";
+            this.preset = "default";
         };
-        this.nolabel = false;
-        this.play = false;
-        this.auto = false;
-        this.dark = false;
-        this.layout = "star'";
-        this.preset = "default";
-    };
-    
-    var text = new fizzyText();
 
-    fetch(`http://${location.hostname}:8000/graph?query={profile(profType: "node")}`)
-        .catch((e) => { throw Error(e); })
-        .then(handleErrors)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(json) {
-            if (json.errors !== undefined) {
-                throw Error('INTERNAL_SERVER_ERROR'); 
-            }
-            options = JSON.parse(json.data.profile);
-            list = options.raw.results[0].data.map(a => a.row[0]);
-            list.splice(list.indexOf("person"), 1); // To Remove person nodes
-            list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
-            list.splice(list.indexOf("年"), 1); // To Remove candidate nodes
-            list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
-            list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
+        var text = new fizzyText();
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
-        .catch((e) => { throw Error(e); })
-        .then(handleErrors)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(json) {
-            if (json.errors !== undefined) {
-                throw Error('INTERNAL_SERVER_ERROR'); 
-            }
-            options = JSON.parse(json.data.node);
-            // console.log(json.data.node);
-            if (options.results.length > 0) {
-                category_hash = {}
-                category_list = options.results[0].data.map(a => { 
-                    return [a.row[0].name, a.row[1].name]                
-                });
-                //console.log(options.results[0].data)
-                options.results[0].data.map(a => { 
-                    if (category_hash[a.row[0].name]) {
-                        category_hash[a.row[0].name].push(a.row[1].name)
-                    } else {
-                        category_hash[a.row[0].name] = [a.row[1].name]
-                    }
-                });
-                
-                console.log(category_list)
-                const colors = [ "e69373", "805240", "e6d5cf", "bf5830" ,
-                "77d36a", "488040", "d2e6cf", "43bf30" ,
-                "557aaa", "405c80", "cfd9e6", "306ebf" ];
-                const color_list = Object.keys(category_hash).map((item, index) => {return [item, colors[index]]})
-                const color_result = color_list.reduce(function(map, obj) {
-                    map[obj[0]] = obj[1];
-                    return map;
-                }, {});
-                //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
-                modal2.setContent(
-                    "<table class=\"table\"><tbody>" + category_list.map(node => {return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>"}).join() + "</tbody></table>"
-                    );
-                modal2.open();
-            }
-        });
+        fetch(`http://${location.hostname}:8000/graph?query={profile(profType: "node")}`)
+            .catch((e) => { throw Error(e); })
+            .then(handleErrors)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json) {
+                if (json.errors !== undefined) {
+                    throw Error('INTERNAL_SERVER_ERROR');
+                }
+                options = JSON.parse(json.data.profile);
+                list = options.raw.results[0].data.map(a => a.row[0]);
+                list.splice(list.indexOf("person"), 1); // To Remove person nodes
+                list.splice(list.indexOf("candidate"), 1); // To Remove candidate nodes
+                list.splice(list.indexOf("年"), 1); // To Remove candidate nodes
+                list.splice(list.indexOf("meta"), 1); // To Remove candidate nodes
+                list.splice(list.indexOf("item"), 1); // To Remove candidate nodes
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["time"])}`)
-        .catch((e) => { throw Error(e); })
-        .then(handleErrors)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(json) {
-            if (json.errors !== undefined) {
-                throw Error('INTERNAL_SERVER_ERROR'); 
-            }
-            options = JSON.parse(json.data.node);
-            // console.log(json.data.node);
-            if (options.results.length > 0) {
-                YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
-            }
-            //years = json.raw
+                fetch(`http://${location.hostname}:8000/graph?query={node(label: ["meta", "item"])}`)
+                    .catch((e) => { throw Error(e); })
+                    .then(handleErrors)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (json) {
+                        if (json.errors !== undefined) {
+                            throw Error('INTERNAL_SERVER_ERROR');
+                        }
+                        options = JSON.parse(json.data.node);
+                        // console.log(json.data.node);
+                        if (options.results.length > 0) {
+                            category_hash = {}
+                            category_list = options.results[0].data.map(a => {
+                                return [a.row[0].name, a.row[1].name]
+                            });
+                            //console.log(options.results[0].data)
+                            options.results[0].data.map(a => {
+                                if (category_hash[a.row[0].name]) {
+                                    category_hash[a.row[0].name].push(a.row[1].name)
+                                } else {
+                                    category_hash[a.row[0].name] = [a.row[1].name]
+                                }
+                            });
 
-    var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
-    var auto_controller = gui.add(text, 'play');
-    var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
-    var first_offset_controller = gui.add(text, 'offset', 0, 100).listen();
-    var first_controller = gui.add(text, 'first_attr', list).listen();
-    var second_controller = gui.add(text, 'second_attr', list).listen(); 
-    //var swap_controller = gui.add(text, 'swap');
-    var swap_controller = gui.add({swap : text.swap.bind(this)}, "swap");
-    var speed_controller = gui.add(text, 'speed', 8, 20).listen(); 
-    //var config_controller = gui.add(text, 'auto');
-    var layout_controller = gui.add(text, 'layout', ["linear", "circular", "star", "spatial", "star'"]).listen();
-    var nolabel_controller = gui.add(text, "nolabel").listen();
-    var dark_mode_controller = gui.add(text, "dark").listen();
-    var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig4a", "Fig4b", "Fig4c", "Fig5", "Fig6"]);
-        
-    year_controller.onChange(function(value) {
-        var year = Math.round(value);
-        text.year = year;
-//        if (value !== text.year) {
-            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
-  //      }
-    });
-        
-    var next_year = function() {
-        if (text.play){
-            text.year += 1;
-            if (text.year > YEARS[YEARS.length - 1]) {
-                text.year = YEARS[0]
-            }
-            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
-        }
-        setTimeout(next_year, text.speed * 1000);
-    }
+                            console.log(category_list)
+                            const colors = ["e69373", "805240", "e6d5cf", "bf5830",
+                                "77d36a", "488040", "d2e6cf", "43bf30",
+                                "557aaa", "405c80", "cfd9e6", "306ebf"];
+                            const color_list = Object.keys(category_hash).map((item, index) => { return [item, colors[index]] })
+                            const color_result = color_list.reduce(function (map, obj) {
+                                map[obj[0]] = obj[1];
+                                return map;
+                            }, {});
+                            //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
+                            modal2.setContent(
+                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
+                            );
+                            modal2.open();
+                        }
+                    });
 
-    var preset = function(value) {
-        text.auto = true;
-        if (value === "Fig1") {
-            text.year = 2017;
-            text.first_attr = "学校所在地域";
-            text.second_attr = "英語のレベル";
-            text.first_items = 3;
-            text.layout = "circular";
-            text.nolabel = true;
-            text.speed = 10;
-        } else if (value === "Fig5") {
-            text.nolabel = true;
-            text.first_attr = "学歴区分";
-            text.second_attr = "英語のレベル";
-            text.layout = "circular";
-            text.first_items = 6;
-        } else if (value === "Fig6") {
-            text.nolabel = true;
-            text.first_attr = "文理";
-            text.second_attr = "希望職種";
-            text.first_items = 2;
-            text.layout = "spatial";
-        } else if (value === "Fig4a") {
-            text.nolabel = true;
-            text.first_attr = "英語のレベル";
-            text.second_attr = "学歴区分";
-            text.layout = "star"
-        } else if (value === "Fig4b") {
-            text.nolabel = true;
-            text.first_attr = "英語のレベル";
-            text.second_attr = "学歴区分";
-            text.layout = "linear"
-        } else if (value === "Fig4c") {
-            text.nolabel = true;
-            text.first_attr = "英語のレベル";
-            text.second_attr = "学歴区分";
-            text.layout = "circular"
-        } else {
-            // Default
-            text.nolabel = true;
-        }
-        if (value !== "default"){
-            gui.hide();
-            document.getElementById('panacea').style.height = '100%';
-        }
+                fetch(`http://${location.hostname}:8000/graph?query={node(label: ["time"])}`)
+                    .catch((e) => { throw Error(e); })
+                    .then(handleErrors)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (json) {
+                        if (json.errors !== undefined) {
+                            throw Error('INTERNAL_SERVER_ERROR');
+                        }
+                        options = JSON.parse(json.data.node);
+                        // console.log(json.data.node);
+                        if (options.results.length > 0) {
+                            YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
+                        }
+                        //years = json.raw
 
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    }
+                        var year_controller = gui.add(text, 'year', YEARS[0], YEARS[YEARS.length - 1]).listen(); // CUSTOM
+                        var auto_controller = gui.add(text, 'play');
+                        var first_scale_controller = gui.add(text, 'first_items', 2, 20).listen();
+                        var first_offset_controller = gui.add(text, 'offset', 0, 100).listen();
+                        var first_controller = gui.add(text, 'first_attr', list).listen();
+                        var second_controller = gui.add(text, 'second_attr', list).listen();
+                        //var swap_controller = gui.add(text, 'swap');
+                        var swap_controller = gui.add({ swap: text.swap.bind(this) }, "swap");
+                        var speed_controller = gui.add(text, 'speed', 8, 20).listen();
+                        //var config_controller = gui.add(text, 'auto');
+                        var layout_controller = gui.add(text, 'layout', ["linear", "circular", "star", "spatial", "star'"]).listen();
+                        var nolabel_controller = gui.add(text, "nolabel").listen();
+                        var dark_mode_controller = gui.add(text, "dark").listen();
+                        var preset_controller = gui.add(text, "preset", ["default", "Fig1", "Fig4a", "Fig4b", "Fig4c", "Fig5", "Fig6"]);
 
-    var urlParam = location.search.substring(1);
-    var paramArray = {};
-    // URLにパラメータが存在する場合
-    if(urlParam) {
-      // 「&」が含まれている場合は「&」で分割
-      var param = urlParam.split('&');
+                        year_controller.onChange(function (value) {
+                            var year = Math.round(value);
+                            text.year = year;
+                            //        if (value !== text.year) {
+                            updateGraph(year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
+                            //      }
+                        });
 
-      // 用意した配列にパラメータを格納
-      for (i = 0; i < param.length; i++) {
-        var paramItem = param[i].split('=');
-        paramArray[paramItem[0]] = paramItem[1];
-      }
+                        var next_year = function () {
+                            if (text.play) {
+                                text.year += 1;
+                                if (text.year > YEARS[YEARS.length - 1]) {
+                                    text.year = YEARS[0]
+                                }
+                                updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.first_items, text.offset, text.nolabel, text.dark);
+                            }
+                            setTimeout(next_year, text.speed * 1000);
+                        }
 
-      if (paramArray["preset"] !== undefined) {
-          preset(paramArray["preset"])
-      }
-    }
+                        var preset = function (value) {
+                            text.auto = true;
+                            if (value === "Fig1") {
+                                text.year = 2017;
+                                text.first_attr = "学校所在地域";
+                                text.second_attr = "英語のレベル";
+                                text.first_items = 3;
+                                text.layout = "circular";
+                                text.nolabel = true;
+                                text.speed = 10;
+                            } else if (value === "Fig5") {
+                                text.nolabel = true;
+                                text.first_attr = "学歴区分";
+                                text.second_attr = "英語のレベル";
+                                text.layout = "circular";
+                                text.first_items = 6;
+                            } else if (value === "Fig6") {
+                                text.nolabel = true;
+                                text.first_attr = "文理";
+                                text.second_attr = "希望職種";
+                                text.first_items = 2;
+                                text.layout = "spatial";
+                            } else if (value === "Fig4a") {
+                                text.nolabel = true;
+                                text.first_attr = "英語のレベル";
+                                text.second_attr = "学歴区分";
+                                text.layout = "star"
+                            } else if (value === "Fig4b") {
+                                text.nolabel = true;
+                                text.first_attr = "英語のレベル";
+                                text.second_attr = "学歴区分";
+                                text.layout = "linear"
+                            } else if (value === "Fig4c") {
+                                text.nolabel = true;
+                                text.first_attr = "英語のレベル";
+                                text.second_attr = "学歴区分";
+                                text.layout = "circular"
+                            } else {
+                                // Default
+                                text.nolabel = true;
+                            }
+                            if (value !== "default") {
+                                gui.hide();
+                                document.getElementById('panacea').style.height = '100%';
+                            }
 
-    setTimeout(next_year, text.speed * 1000);
-        
-    first_scale_controller.onChange(function(value) {
-//        var scale = value * 0.01;
-        text.first_items = Math.round(value);
+                            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        }
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
-    })
+                        var urlParam = location.search.substring(1);
+                        var paramArray = {};
+                        // URLにパラメータが存在する場合
+                        if (urlParam) {
+                            // 「&」が含まれている場合は「&」で分割
+                            var param = urlParam.split('&');
 
-    first_offset_controller.onChange(function(value) {
-//        var scale = value * 0.01;
-        text.offset = Math.round(value);
+                            // 用意した配列にパラメータを格納
+                            for (i = 0; i < param.length; i++) {
+                                var paramItem = param[i].split('=');
+                                paramArray[paramItem[0]] = paramItem[1];
+                            }
 
-        updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
-    })
-        
+                            if (paramArray["preset"] !== undefined) {
+                                preset(paramArray["preset"])
+                            }
+                        }
 
-    swap_controller.onChange(function(value) {
-            const tmp = text.first_attr;
-            text.first_attr = text.second_attr;
-            text.second_attr = tmp;
-            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    })
-    
-    first_controller.onChange(function(value) {
-        if (value === text.second_attr) {
-            return
-        }
-        var first = value;
-        document.getElementById('loadingBar').style.display = 'block';
-        document.getElementById('loadingBar').style.opacity = 100;
-        document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    })
-        
-    layout_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark);
-    })
+                        setTimeout(next_year, text.speed * 1000);
 
-    nolabel_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    })
+                        first_scale_controller.onChange(function (value) {
+                            //        var scale = value * 0.01;
+                            text.first_items = Math.round(value);
 
-    dark_mode_controller.onChange(function(value) {
-        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    })
-    
-    preset_controller.onChange(function(value) {
-        preset(value);
-    })
+                            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
+                        })
 
-    second_controller.onChange(function(value) {
-        if (value === text.first_attr) {
-            return
-        }
-        var second = value;
-        document.getElementById('loadingBar').style.display = 'block';
-        document.getElementById('loadingBar').style.opacity = 100;
-        document.getElementById('text').innerHTML = 0 + '%';
-        drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-    })
+                        first_offset_controller.onChange(function (value) {
+                            //        var scale = value * 0.01;
+                            text.offset = Math.round(value);
 
-    drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
-}).catch(error => {
-    alert(error)
-})
-}).catch(error => {
-    alert(error)
-})
+                            updateGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark)
+                        })
 
-</script>
+
+                        swap_controller.onChange(function (value) {
+                            const tmp = text.first_attr;
+                            text.first_attr = text.second_attr;
+                            text.second_attr = tmp;
+                            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        first_controller.onChange(function (value) {
+                            if (value === text.second_attr) {
+                                return
+                            }
+                            var first = value;
+                            document.getElementById('loadingBar').style.display = 'block';
+                            document.getElementById('loadingBar').style.opacity = 100;
+                            document.getElementById('text').innerHTML = 0 + '%';
+                            drawGraph(text.year, first, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        layout_controller.onChange(function (value) {
+                            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, value, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        nolabel_controller.onChange(function (value) {
+                            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        dark_mode_controller.onChange(function (value) {
+                            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        preset_controller.onChange(function (value) {
+                            preset(value);
+                        })
+
+                        second_controller.onChange(function (value) {
+                            if (value === text.first_attr) {
+                                return
+                            }
+                            var second = value;
+                            document.getElementById('loadingBar').style.display = 'block';
+                            document.getElementById('loadingBar').style.opacity = 100;
+                            document.getElementById('text').innerHTML = 0 + '%';
+                            drawGraph(text.year, text.first_attr, second, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                        })
+
+                        drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                    }).catch(error => {
+                        alert(error)
+                    })
+            }).catch(error => {
+                alert(error)
+            })
+
+    </script>
 </body>
+
 </html>
