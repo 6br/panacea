@@ -488,12 +488,18 @@
             if (options.results.length > 0) {
                 category_hash = {}
                 console.log(options.results[0].data)
-                /*options.results[0].data.map(a => { 
-                    if(category_hash[]) = a.row[0].name
-                });*/
+                options.results[0].data.map(a => { 
+                    if (category_hash[a.row[0].name]) {
+                        category_hash[a.row[0].name].push(a.row[1].name)
+                    } else {
+                        category_hash[a.row[0].name] = [a.row[1].name]
+                    }
+                });
             }
             console.log(category_hash)
-            color_list = [];
+            const colors = [ "e69373", "805240", "e6d5cf", "bf5830" ,
+             "77d36a", "488040", "d2e6cf", "43bf30" ,
+             "557aaa", "405c80", "cfd9e6", "306ebf" ];
             modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + category_hash[node].labels[0] + "</th><td>" + category_hash[node].name + "</td></tr>"}).join() + "</tbody></table>");
             modal.open();
         });
