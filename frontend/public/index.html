@@ -321,7 +321,9 @@
             var container = document.getElementById('panacea');
 
             fetch(`http://${location.hostname}:8000/graph?query={query(year:${year}, first:"${first}", second: "${second}", auto: ${auto}, layout: "${layout}", scale: ${scale}, english: ${english}, offset: ${offset}, dark: ${dark})}`)
-                .then(function (response) {
+            .catch((e) => { throw Error(e); })
+                .then(handleErrors)
+            .then(function (response) {
                     return response.json();
                 })
                 .then(function (json) {
@@ -363,8 +365,8 @@
                                     return response.json();
                                 }).then(function (json) {
                                     const table = JSON.parse(json.data.info);
-                                    console.log(table.pg);
-                                    modal.setContent("<table class=\"table\"><tbody>" + table.pg.nodes.map(node => { return "<tr><th>" + node.labels[0] + "</th><td>" + node.properties.name + "</td></tr>" }).join() + "</tbody></table>");
+//                                    console.log(table.pg);
+                                    modal.setContent("<table class=\"table\"><tbody>" + table.pg.nodes.map(node => { return `<tr ><th>` + node.labels[0] + "</th><td>" + node.properties.name + "</td></tr>" }).join() + "</tbody></table>");
                                     modal.open();
                                 })
                         }
@@ -457,7 +459,9 @@
                         }
                     });
 
-                })
+                }).catch(error => {
+                    alert(error)
+                });
 
         }
 
@@ -540,9 +544,18 @@
                                 map[obj[0]] = obj[1];
                                 return map;
                             }, {});
+                            const update_item = (item, name) => {
+                                modal2.close();
+                                if (item === 1 && text.second_attr !== name) {
+                                    text.first_attr = name;
+                                } else if (item === 2 && text.first_attr !== name) {
+                                    text.second_attr = name;
+                                }  
+                                drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+                            };
                             //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
                             modal2.setContent(
-                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
+                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr onclick= function(){ update_item(1, ${node.properties.name}); }><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
                             );
                             modal2.open();
                         }
