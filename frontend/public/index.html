@@ -222,6 +222,26 @@
         }
     });
 
+    var modal2 = new tingle.modal({
+        footer: true,
+        stickyFooter: false,
+        closeMethods: ['overlay', 'button', 'escape'],
+        closeLabel: "Close",
+        cssClass: [],
+        onOpen: function() {
+            // console.log('modal open');
+        },
+        onClose: function() {
+            // console.log('modal closed');
+        },
+        beforeClose: function() {
+            // here's goes some logic
+            // e.g. save content before closing the modal
+            return true; // close the modal
+            return false; // nothing happens
+        }
+    });
+
     // set content
     // modal.setContent('<h1>Welcome to Panacea!</h1>');
     // modal.open()
@@ -509,12 +529,14 @@
                     return map;
                 }, {});
                 //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
-                modal.setContent("<table class=\"table\"><tbody>" + category_list.map(node => {return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>"}).join() + "</tbody></table>");
-                modal.open();
+                modal2.setContent(
+                    "<table class=\"table\"><tbody>" + category_list.map(node => {return `<tr><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>"}).join() + "</tbody></table>"
+                    );
+                modal2.open();
             }
         });
 
-        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["年"])}`)
+        fetch(`http://${location.hostname}:8000/graph?query={node(label: ["time"])}`)
         .catch((e) => { throw Error(e); })
         .then(handleErrors)
         .then(function(response) {
