@@ -599,7 +599,7 @@
                         }
                         options = JSON.parse(json.data.node);
                         // console.log(json.data.node);
-                        if (options.results.length > 0) {
+                        if (options.results.len() > 0) {
                             YEARS = options.results[0].data.map(a => parseInt(a.row[0].name));
                         }
                         //years = json.raw
