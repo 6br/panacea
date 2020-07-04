@@ -197,6 +197,7 @@
         var nodes_tmp;
         var edges_tmp;
         var YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; // Default value; overwritten by data.
+        var ITEM = 0;
 
         const handleErrors = (res) => {
             if (res.ok) {
@@ -475,7 +476,14 @@
             this.speed = 10;
             this.first_attr = "学歴区分";
             this.second_attr = "希望職種";
-
+            this.set_first = function() {
+                ITEM=1;
+                modal2.open();
+            };
+            this.set_second = function() {
+                ITEM=2;
+                modal2.open();
+            };
             this.swap = function () {
                 const tmp = this.first_attr;
                 this.first_attr = this.second_attr;
@@ -544,18 +552,18 @@
                                 map[obj[0]] = obj[1];
                                 return map;
                             }, {});
-                            const update_item = (item, name) => {
+                            const update_item = (name) => {
                                 modal2.close();
-                                if (item === 1 && text.second_attr !== name) {
+                                if (ITEM === 1 && text.second_attr !== name) {
                                     text.first_attr = name;
-                                } else if (item === 2 && text.first_attr !== name) {
+                                } else if (ITEM === 2 && text.first_attr !== name) {
                                     text.second_attr = name;
                                 }  
                                 drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
                             };
                             //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
                             modal2.setContent(
-                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr onclick= function(){ update_item(1, ${node.properties.name}); }><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
+                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr onclick= function(){ update_item(${node.properties.name}); }><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
                             );
                             modal2.open();
                         }
@@ -584,7 +592,8 @@
                         var first_offset_controller = gui.add(text, 'offset', 0, 100).listen();
                         var first_controller = gui.add(text, 'first_attr', list).listen();
                         var second_controller = gui.add(text, 'second_attr', list).listen();
-                        //var swap_controller = gui.add(text, 'swap');
+                        var set_first_controller = gui.add({ set_first_attr: text.set_first.bind(this) }, "set_first_attr");
+                        var set_second_controller = gui.add({ set_second_attr: text.set_second.bind(this) }, "set_second_attr");
                         var swap_controller = gui.add({ swap: text.swap.bind(this) }, "swap");
                         var speed_controller = gui.add(text, 'speed', 8, 20).listen();
                         //var config_controller = gui.add(text, 'auto');
