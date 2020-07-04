@@ -205,7 +205,8 @@
                 text.first_attr = name;
             } else if (ITEM === 2 && text.first_attr !== name) {
                 text.second_attr = name;
-            }  
+            }
+            //console.log(name);
             drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
         };
 
@@ -340,10 +341,15 @@
                 .then(function (json) {
                     json = JSON.parse(json.data.query)
                     // console.log(json);
+                    if (json.length() < 3) {
+                        alert("No data. Change the option on configuration view.")
+                        return
+                    }
                     nodes_tmp = json[2]
                     edges_tmp = json[3]
                     if (nodes_tmp.length === 0 && edges_tmp.length === 0) {
                         alert("No data. Change the option on configuration view.")
+                        return
                     }
                     nodes = new vis.DataSet(nodes_tmp)
                     edges = new vis.DataSet(edges_tmp)
