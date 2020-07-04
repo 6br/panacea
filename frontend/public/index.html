@@ -199,6 +199,16 @@
         var YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; // Default value; overwritten by data.
         var ITEM = 0;
 
+        function update_item(name) {
+            modal2.close();
+            if (ITEM === 1 && text.second_attr !== name) {
+                text.first_attr = name;
+            } else if (ITEM === 2 && text.first_attr !== name) {
+                text.second_attr = name;
+            }  
+            drawGraph(text.year, text.first_attr, text.second_attr, text.auto, text.layout, text.first_items, text.offset, text.nolabel, text.dark);
+        };
+
         const handleErrors = (res) => {
             if (res.ok) {
                 return res;
