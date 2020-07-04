@@ -563,7 +563,7 @@
                             };
                             //modal.setContent("<table class=\"table\"><tbody>" + Object.keys(category_hash).map(node => {return "<tr><th>" + node + "</th><td>" + category_hash[node].n + "</td></tr>"}).join() + "</tbody></table>");
                             modal2.setContent(
-                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr onclick= function(){ update_item(${node.properties.name}); }><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
+                                "<table class=\"table\"><tbody>" + category_list.map(node => { return `<tr onclick= function(){ update_item(${node[1]}); }><th>` + node[0] + `</th><td style="background-color: #${color_result[node[0]]} !important;">` + node[1] + "</td></tr>" }).join() + "</tbody></table>"
                             );
                             //modal2.open();
                         }
