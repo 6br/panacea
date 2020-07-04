@@ -437,6 +437,9 @@
                         throw Error('INTERNAL_SERVER_ERROR');
                     }
                     const table = JSON.parse(json.data.table);
+                    if (table.results[0] === undefined) {
+                        return
+                    }
                     const data = table.results[0].data;
                     let datahash = {};
                     data.forEach(item => {
