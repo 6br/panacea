@@ -125,6 +125,8 @@ def forceatlas(result, pos, edges, niter=100):
 
 def to_bipertite_edges(raw):
     ret_list = []
+    if len(raw['results']) == 0:
+        raise Exception('No data on database; please retry with different parameters.')
     for item in raw['results'][0]['data']:
         ret_list.append({"from": str(item['meta'][0]['id']), "to": str(item['meta'][4]['id'])})
     return ret_list
