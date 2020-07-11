@@ -98,12 +98,12 @@ for item in sys.argv[1:]:
             for rank, belong in enumerate(sci_expectations):
                 if belong and belong == belong and not belong == actual_belong:
                     company_id = add_company(belong, ":ドメイン")
-                    edge = [str(i+1), "->", str(company_id), ":is_interested_in"]
+                    edge = [str(i+1), "->", str(company_id), ":is_interested_in", "rank:" + "\"" + str(rank).replace('"', '\\"') + "\""]
                     print("\t".join(edge))
             for rank, belong in enumerate(sci_required):
                 if belong and belong == belong and not belong in sci_expectations:
                     company_id = add_company(belong, ":ドメイン")
-                    edge = [str(i+1), "->", str(company_id), ":is_required_to_work_at"]
+                    edge = [str(i+1), "->", str(company_id), ":is_required_to_work_at", "rank:" + "\"" + str(rank).replace('"', '\\"') + "\""]
                     print("\t".join(edge))
         except:
             pass

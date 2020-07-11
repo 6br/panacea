@@ -30,6 +30,36 @@ def query(source, target, year, scale, offset):
     raw = res.json()['raw']
     return result, raw
 
+def node_query(node_labels):
+    if len(node_labels) == 1:
+        query = """
+        MATCH (n:{node_label})
+        RETURN n
+        """.format(node_label=node_labels[0])
+        res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+        res.raise_for_status()
+        raw = res.json()['raw']
+        return raw
+    elif len(node_labels) == 2:
+        query = """
+        MATCH (n:{node_label1})-[e]-(m:{node_label2})
+        RETURN n,m
+        """.format(node_label1=node_labels[0], node_label2=node_labels[1])
+        res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+        res.raise_for_status()
+        raw = res.json()['raw']
+        return raw
+
+def edge_query(edge_label):
+        query = """
+        MATCH (n)-[r:{edge_label}]-(m)
+        RETURN *
+        """.format(edge_label=edge_label)
+        res = requests.get('{host}/query/'.format(host=HOST), params={"q": query, "raw": "true"})
+        res.raise_for_status()
+        raw = res.json()['raw']
+        return raw
+
 def media_query(media_id):
     res = requests.get('{host}/traversal/?node_ids={node_id}&iteration=2'.format(host=HOST, node_id=media_id), params={"raw": "true"})
     res.raise_for_status()
@@ -81,7 +111,7 @@ def count_num_query(source, target, year):
         return target, source
 
 def profile_query(prof_type):
-    res = requests.get('{host}/profile/'.format(host=HOST), params={"type": prof_type, "raw": "true"})
+    res = requests.get('{host}/profile'.format(host=HOST), params={"type": prof_type, "raw": "true"})
     res.raise_for_status()
     return res.json()
     
@@ -95,6 +125,8 @@ def forceatlas(result, pos, edges, niter=100):
 
 def to_bipertite_edges(raw):
     ret_list = []
+    if len(raw['results']) == 0:
+        raise Exception('No data on database; please retry with different parameters.')
     for item in raw['results'][0]['data']:
         ret_list.append({"from": str(item['meta'][0]['id']), "to": str(item['meta'][4]['id'])})
     return ret_list

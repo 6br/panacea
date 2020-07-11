@@ -11,10 +11,42 @@ logging.basicConfig(level=logging.DEBUG, format=formatter)
 
 company_hash = {}
 company_latest_id = 1000000 # We start company id from here.
+meta_id = 10000000
 i = 0
 MIN_PROPS_COUNT=3
 
 normalize_hash = {"日立": "日立製作所", "hitachi": "日立製作所", "sony": "ソニー", "canon": "キヤノン", "キャノン": "キヤノン", "ntt": "日本電信電話", "トヨタ": "トヨタ自動車", "nttdocomo": "nttドコモ", "エプソン": "セイコーエプソン", "honda": "本田技研工業", "ホンダ": "本田技研工業", "本田技研": "本田技研工業", "日産": "日産自動車"}
+
+
+#if sys.argv[1]:
+category = pd.read_csv(sys.argv[1], low_memory=False, encoding="utf-8", skipinitialspace=True)
+category_hash = {}
+meta_nodes = []
+for _, row in category.iterrows():
+    category_hash[row["2019"]] = row["カテゴリ名"]
+    meta_nodes.append(row["カテゴリ名"])
+
+meta_set = set(meta_nodes)
+meta_list = list(meta_set)
+meta_hash = {}
+for meta_name in meta_list:
+    if type(meta_name) is str:
+        meta = [str(meta_id), ":meta", "name:\"" + meta_name.rstrip().strip("\\").replace('\t', ' ') + "\""]
+        print("\t".join(meta))
+        meta_hash[meta_name] = meta_id
+        meta_id += 1
+
+for (key, value) in category_hash.items():
+    # Key is a type of attribute.
+    if type(key) is str:
+        meta = [str(meta_id), ":item", "name:\"" + key.rstrip().strip("\\").replace('\t', ' ') + "\""] # "category: str(value).replace('"', '\\"')
+        print("\t".join(meta))
+        # Add category edge:
+        if value in meta_list:
+            edge = [str(meta_id), "->", str(meta_hash[value]), ":categorized_as", "label:" + "\"" + str(value).replace('"', '\\"') + "\""]
+            print("\t".join(edge))
+        meta_id += 1
+
 
 def add_company(name, node_type):
     # TODO: WE NEED TO NORMALIZE A NAME OF COMPANY
@@ -26,14 +58,17 @@ def add_company(name, node_type):
         name = normalize_hash[name]
     if name in company_hash:
         return company_hash[name]
+    
+    # If not exist:
     company_latest_id += 1
     company = [str(company_latest_id), node_type, "name:\"" + name.rstrip().strip("\\").replace('\t', ' ') + "\""]
     print("\t".join(company))
     company_hash[name] = company_latest_id
+
     return company_hash[name]
 
 
-for item in sys.argv[1:]:
+for item in sys.argv[2:]:
     logging.debug('%s', item)
     e2r = pd.read_csv(item, low_memory=False, encoding="cp932", skipinitialspace=True)
 
@@ -46,6 +81,7 @@ for item in sys.argv[1:]:
         if row["大学名"] == row["大学名"]:
             props["name"] = "\"" + str(row["大学名"].rstrip()) + "\""
         props["year"] = re.findall("[0-9]{4}", item)[0]
+        year = re.findall("[0-9]{4}", item)[0]
         props["category"] = row["内々定_意思確認フラグ"]
         if "内々定_配属カンパニー" in row:
             belong = row["内々定_配属カンパニー"]
@@ -74,7 +110,7 @@ for item in sys.argv[1:]:
         referral = row["選考種別フラグ"]
         evaluation = row["最終選考_評価_採用センター所長"]
 
-        tuples = [(":文理", bunri, ":is_related_to"), (":学部", department, ":is_at"), (":系統", keitou, ":is_majored_in"), (":東西区分", east_west, ":is_categorized_as"), (":学歴区分", degree, ":is_now"), (":希望職種", syokusyu, ":desires"), (":希望職種系統", row["希望職種系統"], ":desires"), (":学校所在地域", province, ":is_located_at"), (":選考会エントリー期", when, ":is_applied_when"), (":性別", gender, ":is"), (":英語のレベル", english, ":speaks_English_as"), (":選考種別フラグ", referral, ":is_a"), (":最終選考_評価_採用センター所長", evaluation, ":is_evaluated_as")]
+        tuples = [(":文理", bunri, ":is_related_to"), (":学部", department, ":is_at"), (":系統", keitou, ":is_majored_in"), (":東西区分", east_west, ":is_categorized_as"), (":学歴区分", degree, ":is_now"), (":希望職種", syokusyu, ":desires"), (":希望職種系統", row["希望職種系統"], ":desires"), (":学校所在地域", province, ":is_located_at"), (":選考会エントリー期", when, ":is_applied_when"), (":性別", gender, ":is"), (":英語のレベル", english, ":speaks_English_as"), (":選考種別フラグ", referral, ":is_a"), (":最終選考_評価_採用センター所長", evaluation, ":is_evaluated_as"), (":time", year, ":in")]
         node = [str(i+1), ":person"] if (props["category"] != "入社意思確定" and props["category"] != "07da9a3b2054dcaf92b695d4ab55bad29bc18c0c7b26de25f9f1bb86cf2513f3" and props["category"] != "dc42f4638f80ae5dc1a5ddaf2e4edfdee6577407b4e0bf6a1a23c8b2b90b6202" and props["category"] != "5cd05332ceec0f70e816e2a698345f7f8f9e4feaf33e6272f1c6236dbcec1af5" and props["category"] != "987e0dab1fe8551842fe8662b87becaee41ef1d2471ef7bc7bba4b2a6e21e8fc") else [str(i+1), ":candidate"]
         if university == university:
             company_id = add_company(university, ":大学名")
@@ -109,12 +145,12 @@ for item in sys.argv[1:]:
             for rank, belong in enumerate(sci_expectations):
                 if belong and belong == belong and not belong == actual_belong:
                     company_id = add_company(belong, ":ドメイン")
-                    edge = [str(i+1), "->", str(company_id), ":is_interested_in"]
+                    edge = [str(i+1), "->", str(company_id), ":is_interested_in", "rank:" + "\"" + str(rank).replace('"', '\\"') + "\""]
                     print("\t".join(edge))
             for rank, belong in enumerate(sci_required):
                 if belong and belong == belong and not belong in sci_expectations:
                     company_id = add_company(belong, ":ドメイン")
-                    edge = [str(i+1), "->", str(company_id), ":is_required_to_work_at"]
+                    edge = [str(i+1), "->", str(company_id), ":is_required_to_work_at", "rank:" + "\"" + str(rank).replace('"', '\\"') + "\""]
                     print("\t".join(edge))
         except:
             pass
