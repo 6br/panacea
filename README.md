@@ -34,4 +34,6 @@ Access to `http://localhost:8080`
 3. Move the output to neo4j folder `mv analysis/graph_complex_all.neo.* neo4j/graph_complex_all.neo.*`
 4. Run docker-compose `./docker-compose up`
 
+# Citation
 
+[Yokoyama TT, Okada M, Taniguchi, T. Visual Exploration System for Analyzing Trends in Annual Recruitment Using Time-varying Graphs. arXiv, arXiv:2008.10039, 2020.](https://arxiv.org/abs/2008.10039)
