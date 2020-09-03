@@ -1,6 +1,8 @@
 Panacea: Polarizing Attributes for Network Analysis of Correlation on Entities Association
 -------
 
+![fig](fig/fig3b.png)
+
 # Getting Started
 
 ```bash
