@@ -27,13 +27,8 @@ def add_company(name, node_type):
     company_hash[name] = company_latest_id
     return company_hash[name]
 
-
-#e2r = pd.read_csv("~/rcc/e2r_panasonic2019_alldata/2019_01.csv", low_memory=False)
-
 for item in sys.argv[1:]:
     e2r = pd.read_csv(item, low_memory=False)
-
-#e2r = pd.read_csv("~/rcc/e2r_panasonic2018_alldata/2018.csv", low_memory=False)
 
     for _, row in e2r.iterrows():
         props = {}
