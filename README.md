@@ -3,9 +3,11 @@ Panacea: Polarizing Attributes for Network Analysis of Correlation on Entities A
 
 ![fig](fig/fig3b.png)
 
-# Getting Started
+## Getting started
 
 ```bash
+$ git clone https://github.com/6br/panacea
+$ cd panacea
 $ docker-compose build
 $ docker-compose up
 ``` 
@@ -29,13 +31,13 @@ Consider to check `~/.docker/config.json` when you struggle with proxies.
 
 Access to `http://localhost:8080`
 
-# Integrate with basic auth
+## Integrate with basic auth
 
 ```bash
 $ htpasswd -c -b frontend/.htpasswd <user> <pass>
 ```
 
-# Import Data
+## Import Data
 
 1. Modify the path on `analysis/complex_graph_all.sh`
 2. Run `analysis/complex_graph_all.sh <csv_files_of_hr_data>`
@@ -43,6 +45,6 @@ $ htpasswd -c -b frontend/.htpasswd <user> <pass>
 4. Run docker-compose `./docker-compose up`
 
 
-# Citation
+## Citation
 
 [Yokoyama TT, Okada M, Taniguchi, T. Visual Exploration System for Analyzing Trends in Annual Recruitment Using Time-varying Graphs. arXiv, arXiv:2008.10039, 2020.](https://arxiv.org/abs/2008.10039)
