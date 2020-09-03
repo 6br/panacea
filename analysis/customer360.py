@@ -25,7 +25,6 @@ merged = pickle.load(open('merged.pkl', 'rb'))
 # In[3]:
 
 
-#merged3 = merged2
 merged2 = merged
 
 
@@ -38,7 +37,6 @@ merged2.head()
 # In[5]:
 
 
-#[i for i in merged2.columns if "意思" in i]
 merged2[merged2["意思確認"]== "確認しました。"].head()
 
 
